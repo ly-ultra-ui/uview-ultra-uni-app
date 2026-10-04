@@ -1,0 +1,358 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    plain
+					    size="mini"
+					    type="warning"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义主题</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag text="标签">
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="error"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">圆形标签</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    plain
+						shape="circle"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+						shape="circle"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">镂空标签</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    plain
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					    plain
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					    plain
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="error"
+					    plain
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">镂空带背景色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    plain
+					    plainFill
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					    plain
+					    plainFill
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					    plain
+					    plainFill
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="error"
+					    plain
+					    plainFill
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义尺寸</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    plain
+					    size="mini"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					    plain
+					    size="large"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">可关闭标签</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    size="mini"
+					    closable
+					    :show="close1"
+					    @close="close1 = false"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					    closable
+						:show="close2"
+					    @close="close2 = false"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					    plain
+					    size="large"
+					    closable
+						:show="close3"
+					    @close="close3 = false"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">带图片和图标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    size="mini"
+					    icon="map"
+					    plain
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="warning"
+					    icon="tags-fill"
+					>
+					</up-tag>
+				</view>
+				<view class="u-page__tag-item">
+					<up-tag
+					    text="标签"
+					    type="success"
+					    plain
+					    size="large"
+					    icon="https://cdn.uviewui.com/uview/example/tag.png"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">单选标签</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view
+				    class="u-page__tag-item"
+				    v-for="(item, index) in radios"
+				    :key="index"
+				>
+					<up-tag
+					    :text="`选项${(index + 1).toString()}`"
+					    :plain="item['checked'] == false"
+					    type="warning"
+					    :name="index"
+					    @click="radioClick"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">多选标签</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view
+				    class="u-page__tag-item"
+				    v-for="(item, index) in checkboxs"
+				    :key="index"
+				>
+					<up-tag
+					    :text="`选项${(index + 1).toString()}`"
+					    :plain="item['checked'] == false"
+					    type="warning"
+					    :name="index"
+					    @click="checkboxClick"
+					>
+					</up-tag>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const close1 = ref(true)
+	const close2 = ref(true)
+	const close3 = ref(true)
+	const radios = ref([
+		{
+			checked: true
+		},
+		{
+			checked: false
+		},
+		{
+			checked: false
+		}
+	])
+	const checkboxs = ref([
+		{
+			checked: true
+		},
+		{
+			checked: false
+		},
+		{
+			checked: false
+		}
+	])
+
+	function radioClick(name: string): void {
+		radios.value.map((item, index) => {
+			item['checked'] = index === parseInt(name) ? true : false
+		})
+	}
+
+	function checkboxClick(name: string): void {
+		const index = parseInt(name)
+		if (checkboxs.value[index]?.['checked'] as Boolean) {
+			checkboxs.value[index]['checked'] = false
+		} else {
+			checkboxs.value[index]['checked'] = true
+		}
+	}
+</script>
+
+<style lang="scss">
+	.u-page__tag-item {
+		margin-right: 20px;
+	}
+
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+</style>

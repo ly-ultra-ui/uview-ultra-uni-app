@@ -1,0 +1,194 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="上拉菜单"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
+				@click="openSheet(index)"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-action-sheet
+			:show="show0"
+			@close="close"
+			@select="select"
+			:actions="actions0"
+			:closeOnClickOverlay="false"
+		>
+		</up-action-sheet>
+		<up-action-sheet
+			:show="show1"
+			@close="show1 = false"
+			:actions="actions1"
+		>
+		</up-action-sheet>
+		<up-action-sheet
+			:show="show2"
+			@close="show2 = false"
+			:actions="actions2"
+			cancelText="取消"
+		>
+		</up-action-sheet>
+		<up-action-sheet
+			:show="show3"
+			@close="show3 = false"
+			:actions="actions3"
+			description="这是一段描述文本,字号偏小,颜色偏淡"
+		>
+		</up-action-sheet>
+		<up-action-sheet
+			:show="show4"
+			@close="show4 = false"
+			title="标题位置"
+			:round="10"
+		>
+			<text style="margin: 10px 20px 30px 20px; color: #303133; font-size: 15px;">这是一段通过slot传入的内容,您可以在此自定义操作面板</text>
+		</up-action-sheet>
+		<up-action-sheet
+			:show="show5"
+			@close="show5 = false"
+			title="微信开放能力"
+			:actions="actions5"
+			@getuserinfo="getuserinfo"
+		></up-action-sheet>
+	</view>
+</template>
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { toast } from '@/uni_modules/uview-ultra/index.js'
+
+	const show0 = ref(false)
+	const show1 = ref(false)
+	const show2 = ref(false)
+	const show3 = ref(false)
+	const show4 = ref(false)
+	const show5 = ref(false)
+	const actions0 = [
+		{
+			name: '选项0',
+		},
+		{
+			name: '选项2',
+		},
+		{
+			name: '选项3',
+			subname: '描述文本'
+		},
+	]
+	const actions1 = [
+		{
+			name: '选项1',
+		},
+		{
+			loading: true
+		},
+		{
+			name: '选项被禁用',
+			disabled: true
+		},
+	]
+	const actions2 = [
+		{
+			name: '选项1',
+		},
+		{
+			name: '选项2',
+		},
+		{
+			name: '选项3',
+		},
+	]
+	const actions3 = [
+		{
+			name: '选项1',
+		},
+		{
+			name: '选项2',
+		},
+		{
+			name: '选项3',
+		},
+	]
+	const actions5 = [{
+		name: '获取用户信息',
+		openType: 'getUserInfo',
+		color: 'green'
+	}]
+	const list = [
+		{
+			title: '普通使用',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/custom.png'
+		},
+		{
+			title: '设置状态',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/status.png'
+		},
+		{
+			title: '显示取消按钮',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/cancel.png'
+		},
+		{
+			title: '描述内容',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/desc.png'
+		},
+		{
+			title: '显示标题(显示圆角)',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/title.png'
+		},
+		{
+			title: '微信开放能力',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/actionSheet/open.png'
+		}
+	]
+
+	function openSheet(index: number) {
+		// #ifndef MP
+		if (index == 5) return toast('请在微信内预览')
+		// #endif
+		if (index == 0) show0.value = true
+		if (index == 1) show1.value = true
+		if (index == 2) show2.value = true
+		if (index == 3) show3.value = true
+		if (index == 4) show4.value = true
+		if (index == 5) show5.value = true
+	}
+
+	function getuserinfo(res: UniEvent) {
+		// toast(`用户名：${res['userInfo']['nickName']}`)
+	}
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+
+	function close() {
+		console.log('close')
+		show0.value = false
+	}
+
+	function select(e: any) {
+		console.log('select', e)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

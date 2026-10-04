@@ -1,0 +1,132 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="键盘"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-gap height="20" bgColor="#fff"></up-gap>
+		<up-cell-group>
+			<up-cell
+			    :titleStyle="{fontWeight: 500}"
+			    @click="openKeyboard(index)"
+			    :title="item['title']"
+			    v-for="(item, index) in list"
+			    :key="index"
+			    isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-keyboard
+		    :mode="keyData.mode"
+		    :dotDisabled="keyData.dotDisabled"
+		    :random="keyData.random"
+		    :show="show"
+		    @close="close"
+			@cancel="cancel"
+			@confirm="confirm"
+			@change="change"
+			@backspace="backspace"
+		></up-keyboard>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+	type keyDataType = {
+		mode: string;
+		dotDisabled: boolean;
+		random: boolean;
+	}
+
+	const input = ref('')
+	const keyData = ref({
+		mode: '',
+		dotDisabled: false,
+		random: false,
+	} as keyDataType)
+	const list = [{
+			title: '车牌号键盘',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/keyboard/car.png'
+		},
+		{
+			title: '数字键盘',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/keyboard/number.png'
+		},
+		{
+			title: '身份证键盘',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/keyboard/IdCard.png'
+		},
+		{
+			title: '隐藏键盘"."符号',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/keyboard/dot.png'
+		},
+		{
+			title: '打乱键盘按键的顺序',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/keyboard/order.png'
+		},
+	]
+	const show = ref(false)
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+
+	function openKeyboard(indexNum: number) {
+		keyData.value = {
+			mode: '',
+			dotDisabled: false,
+			random: false,
+		} as keyDataType
+		if (indexNum == 0) {
+			keyData.value.mode = ''
+		} else if (indexNum == 1) {
+			keyData.value.mode = 'number'
+		} else if (indexNum == 2) {
+			keyData.value.mode = 'card'
+		} else if (indexNum == 3) {
+			keyData.value.mode = 'number'
+			keyData.value.dotDisabled = true
+		} else if (indexNum == 4) {
+			keyData.value.mode = 'number'
+			keyData.value.random = true
+		}
+		input.value = ''
+		show.value = true
+	}
+
+	function change(e: any) {
+		input.value += e
+	}
+
+	function close() {
+		show.value = false
+	}
+
+	function cancel() {
+		show.value = false
+	}
+
+	function confirm() {
+		show.value = false
+	}
+
+	function backspace() {
+		input.value = input.value.slice(0, -1)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

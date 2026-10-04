@@ -1,0 +1,236 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="日历"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
+				@click="showCalendar(index)"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				:label="values[index]"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-calendar
+			:show="show1"
+			defaultDate="2022-02-15"
+			@confirm="confirm"
+			@close="close"
+		></up-calendar>
+		<up-calendar
+			:show="show2"
+			mode="multiple"
+			:defaultDate="['2022-03-01']"
+			@confirm="confirm"
+			@close="close"
+		></up-calendar>
+		<up-calendar
+			:show="show3"
+			mode="range"
+			@confirm="confirm"
+			@close="close"
+		></up-calendar>
+		<up-calendar
+			:show="show4"
+			mode="range"
+			@confirm="confirm"
+			@close="close"
+			color="#f56c6c"
+			:defaultDate="customThemeDefaultDate"
+		></up-calendar>
+		<up-calendar
+			:show="show5"
+			mode="range"
+			@confirm="confirm"
+			@close="close"
+			:defaultDate="customTextDefaultDate"
+			startText="住店"
+			endText="离店"
+			confirmDisabledText="请选择离店日期"
+			:formatter="formatter"
+		></up-calendar>
+		<up-calendar
+			:show="show6"
+			@confirm="confirm"
+			@close="close"
+			:maxDate="maxDate"
+		></up-calendar>
+		<up-calendar
+			:show="show7"
+			@confirm="confirm"
+			@close="close"
+			showLunar
+		></up-calendar>
+		<up-calendar
+			:show="show8"
+			@confirm="confirm"
+			@close="close"
+			mode="multiple"
+			:defaultDate="defaultDateMultiple"
+		></up-calendar>
+		<up-calendar
+			:show="show9"
+			@confirm="confirm"
+			@close="close"
+			defaultDate="2023-06-15"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
+		<up-calendar
+			:show="show10"
+			@confirm="confirm"
+			@close="close"
+			mode="range"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			:defaultDate="switchRangeDefaultDate"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
+		<up-calendar
+			:show="show11"
+			@confirm="confirm"
+			@close="close"
+			mode="multiple"
+			:minDate="switchMinDate"
+			:maxDate="switchMaxDate"
+			:defaultDate="switchMultipleDefaultDate"
+			:monthNum="36"
+			monthSwitch
+		></up-calendar>
+	</view>
+</template>
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const d = new Date()
+	const year = d.getFullYear()
+	const month = d.getMonth() + 1
+	const monthStr = month < 10 ? `0${month.toString()}` : month.toString()
+	const date = d.getDate()
+	const index = ref(0)
+	const show1 = ref(false)
+	const show2 = ref(false)
+	const show3 = ref(false)
+	const show4 = ref(false)
+	const show5 = ref(false)
+	const show6 = ref(false)
+	const show7 = ref(false)
+	const show8 = ref(false)
+	const show9 = ref(false)
+	const show10 = ref(false)
+	const show11 = ref(false)
+	const values = ref(['','','','','','','','','','',''])
+	const customThemeDefaultDate = [`${year}-${monthStr}-${date}`, `${year}-${monthStr}-${(date + 5).toString()}`]
+	const customTextDefaultDate = [`${year}-${monthStr}-${date}`]
+	const maxDate = `${year}-${monthStr}-${date + 10}`
+	const defaultDateMultiple = [`${year}-${monthStr}-${date}`, `${year}-${monthStr}-${date + 1}`, `${year}-${monthStr}-${date + 2}`]
+	const switchMinDate = '2022-01-01'
+	const switchMaxDate = '2024-12-31'
+	const switchRangeDefaultDate = ['2023-06-15', '2023-06-20']
+	const switchMultipleDefaultDate = ['2023-06-15', '2023-07-15', '2024-06-15']
+	const list = [
+		{ title: '单个日期', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/7.png' },
+		{ title: '多个日期', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/8.png' },
+		{ title: '日期范围', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/9.png' },
+		{ title: '自定义主题颜色', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/15.png' },
+		{ title: '自定义文案', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/14.png' },
+		{ title: '日期最大范围', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/13.png' },
+		{ title: '显示农历', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/5.png' },
+		{ title: '默认日期', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/10.png' },
+		{ title: '单月切换-单选', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/7.png' },
+		{ title: '单月切换-日期区间', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/9.png' },
+		{ title: '单月切换-多选', iconUrl: 'https://cdn.uviewui.com/uview/demo/calendar/8.png' }
+	]
+
+	function setShow(target: number, value: boolean): void {
+		if (target == 1) show1.value = value
+		if (target == 2) show2.value = value
+		if (target == 3) show3.value = value
+		if (target == 4) show4.value = value
+		if (target == 5) show5.value = value
+		if (target == 6) show6.value = value
+		if (target == 7) show7.value = value
+		if (target == 8) show8.value = value
+		if (target == 9) show9.value = value
+		if (target == 10) show10.value = value
+		if (target == 11) show11.value = value
+	}
+
+	function showCalendar(target: number) {
+		index.value = target + 1
+		setShow(index.value, true)
+	}
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+
+	function setJoinedValue(valueIndex: number, result: Array<string>): void {
+		result.forEach((value, itemIndex: number) => {
+			values.value[valueIndex] = itemIndex == 0 ? value : `${values.value[valueIndex]};${value}`
+		})
+	}
+
+	function confirm(e: Array<string>) {
+		setShow(index.value, false)
+		console.log(e)
+		const valueIndex = index.value - 1
+		switch (valueIndex) {
+			case 0:
+			case 5:
+			case 6:
+			case 8:
+				values.value[valueIndex] = e[0]
+				break
+			case 1:
+			case 7:
+			case 10:
+				setJoinedValue(valueIndex, e)
+				break
+			case 2:
+			case 3:
+			case 4:
+			case 9:
+				values.value[valueIndex] = e[0] + '~' + e[e.length - 1]
+				break
+		}
+	}
+
+	function close() {
+		setShow(index.value, false)
+	}
+
+	function formatter(day: UTSJSONObject) {
+		const d = new Date()
+		const month = d.getMonth() + 1
+		const date = d.getDate()
+		if (day['month'] == month && day['day'] == date + 3) {
+			day['bottomInfo'] = '有优惠'
+			day['dot'] = true
+		}
+		return day
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

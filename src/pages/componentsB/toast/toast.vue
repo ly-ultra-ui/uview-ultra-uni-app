@@ -1,0 +1,106 @@
+<template>
+	<view class="u-page">
+		<up-gap
+			height="30"
+			bgColor="#fff"
+		></up-gap>
+		<up-toast ref="upToastRef"></up-toast>
+		<up-cell-group title-bg-color="rgb(243, 244, 246)">
+			<up-cell
+				:titleStyle="{fontWeight: 500}"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+				:icon="item['icon']"
+				@click="showToast(item)"
+			>
+				<!-- <template #icon>
+					<image
+						class="u-cell-icon"
+						:src="getIcon(item['icon'])"
+						mode="widthFix"
+					></image>
+				</template> -->
+			</up-cell>
+		</up-cell-group>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const upToastRef = ref<ComponentPublicInstance | null>(null)
+	const list = [{
+			type: 'default',
+			title: '默认主题',
+			message: "锦瑟无端五十弦",
+			icon: 'https://cdn.uviewui.com/uview/demo/toast/default.png'
+		},
+		{
+			type: 'error',
+			icon: false,
+			title: '失败主题',
+			message: "一弦一柱思华年"
+		},
+		{
+			type: 'success',
+			title: '成功主题(带图标)',
+			message: "庄生晓梦迷蝴蝶",
+			icon: 'https://cdn.uviewui.com/uview/demo/toast/success.png'
+		},
+		{
+			type: 'warning',
+			position: "top",
+			title: '位置偏移上方',
+			message: "望帝春心托杜鹃",
+			icon: 'https://cdn.uviewui.com/uview/demo/toast/top.png'
+		},
+		{
+			type: 'loading',
+			title: '正在加载',
+			message: "正在加载",
+			icon: 'https://cdn.uviewui.com/uview/demo/toast/loading.png'
+		},
+		{
+			type: 'default',
+			title: '结束后跳转标签页',
+			message: "此情可待成追忆",
+			url: '/pages/componentsB/tag/tag',
+			icon: 'https://cdn.uviewui.com/uview/demo/toast/jump.png'
+		}
+	]
+
+	function getIcon(path: string) {
+		return 'https://cdn.uviewui.com/uview/example/' + path + '.png'
+	}
+
+	function showToast(params: UTSJSONObject) {
+		upToastRef.value?.show({
+			...params,
+			complete() {
+				if (params['url'] != null) {
+					uni.navigateTo({
+						url: params['url'] as string
+					})
+				}
+			}
+		})
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+
+	.u-cell-icon {
+		width: 36rpx;
+		height: 36rpx;
+		margin-right: 8rpx;
+	}
+
+	.u-cell-group__title__text {
+		font-weight: bold;
+	}
+</style>

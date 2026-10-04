@@ -1,0 +1,266 @@
+<template>
+  <view class="u-page">
+    <up-alert class="u-m-b-20" description="PC端查看时需要触摸仿真模式"></up-alert>
+		<view class="u-page__item">
+		    <text class="u-page__item__title" style="margin-top: 0;">基本使用</text>
+		    <view class="u-page__item__content">
+		      <up-pull-refresh
+		          :refreshing="refreshing"
+		          :threshold="50"
+		          @refresh="onRefresh"
+		        >
+		          <!-- 列表内容 -->
+		          <view class="list-content">
+						<view 
+						  v-for="item in listData" 
+						  :key="getItemId(item)"
+						  class="list-item"
+						>
+						  <text>{{ getItemName(item) }}</text>
+						</view>
+					</view>
+		        </up-pull-refresh>
+		    </view>
+		</view>
+		<view class="u-page__item">
+          <text class="u-page__item__title" style="margin-top: 0;">自定义下拉动画</text>
+          <view class="u-page__item__content">
+            <up-pull-refresh
+			  :refreshing="refreshing1"
+			  :threshold="60"
+			  @refresh="onRefresh1"
+			>
+			  <!-- 自定义下拉状态 -->
+			  <template #pull="{ distance, threshold }">
+				<view class="custom-refresh-content u-flex-y u-flex-items-center">
+				  <view class="pull-animation">
+					<up-icon name="arrow-downward" size="26px"></up-icon>
+				  </view>
+				  <text class="refresh-text">下拉刷新 ({{ formatDistance(distance) }}px)</text>
+				</view>
+			  </template>
+			  
+			  <!-- 自定义释放状态 -->
+			  <template #release="{ distance, threshold }">
+				<view class="custom-refresh-content u-flex-y u-flex-items-center">
+				  <view class="release-animation">
+					<up-icon name="arrow-upward" size="26px"></up-icon>
+				  </view>
+				  <text class="refresh-text">释放刷新</text>
+				</view>
+			  </template>
+			  
+			  <!-- 自定义刷新中状态 -->
+			  <template #refreshing>
+				<view class="custom-refresh-content u-flex-y u-flex-items-center" style="background-color: gray;">
+				  <view class="refreshing-animation" style="margin-bottom: -32px;">
+					<up-icon size="100px" name="https://uview-plus.jiangruyi.com/uview/ext/772bb6ae58cbd2c1.gif"></up-icon>
+				  </view>
+				  <!-- <text class="refresh-text">正在刷新...</text> -->
+				</view>
+			  </template>
+			  
+			  <!-- 列表内容 -->
+			  <view class="list-content">
+				<view 
+				  v-for="item in listData" 
+				  :key="getItemId(item)"
+				  class="list-item"
+				>
+				  <text>{{ getItemName(item) }}</text>
+				</view>
+			  </view>
+			</up-pull-refresh>
+          </view>
+      </view>
+	  <view class="u-page__item">
+	      <text class="u-page__item__title" style="margin-top: 0;">结合虚拟列表</text>
+	      <view class="u-page__item__content">
+	        <up-pull-refresh
+			  :refreshing="refreshing3"
+			  @refresh="onRefresh3"
+			>
+			  <up-virtual-list
+				:list-data="listData3"
+				:item-height="32"
+				height="150px"
+				@scroll="onScroll3"
+			  >
+				<template #default="{ item, index }">
+				  <view class="list-item">
+					<text>Item {{ getAnyItemId(item) }}: {{ getAnyItemName(item) }}</text>
+				  </view>
+				</template>
+			  </up-virtual-list>
+			</up-pull-refresh>
+	      </view>
+	  </view>
+	  <view class="u-page__item">
+	      <text class="u-page__item__title" style="margin-top: 0;">上拉加载</text>
+	      <view class="u-page__item__content">
+	        <up-pull-refresh
+	  			  :refreshing="refreshing2"
+	  			  :showLoadmore="true"
+	  			  :loadmoreProps="loadmoreConfig"
+	  			  @refresh="onRefresh2"
+	  			  @loadmore="onLoadmore"
+	  			>
+	  				<!-- 使用外部 scroll-view 或其他可滚动组件 -->
+	  				<scroll-view
+	  				  class="scroll-area"
+	  				  style="height: 100px;"
+	  				  :direction="'vertical'"
+	  				  @scrolltolower="onScrollToLower"
+	  				>
+	  				  <view class="list-content">
+	  					<view 
+	  					  v-for="item in listData2" 
+	  					  :key="getItemId(item)"
+	  					  class="list-item"
+	  					>
+	  					  <text>{{ getItemName(item) }}</text>
+	  					</view>
+	  				  </view>
+	  				</scroll-view>
+	  			</up-pull-refresh>
+		      </view>
+	  </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const refreshing = ref(false)
+const refreshing1 = ref(false)
+const refreshing2 = ref(false)
+const loadmoreConfig = ref({
+	status: 'loadmore',
+	loadmoreText: '上拉加载更多',
+	loadingText: '努力加载中...',
+	nomoreText: '我们是有底线的',
+	iconSize: 18
+} as UTSJSONObject)
+const listData = ref([] as Array<UTSJSONObject>)
+const listData2 = ref([] as Array<UTSJSONObject>)
+const refreshing3 = ref(false)
+const listData3 = ref([] as Array<UTSJSONObject>)
+
+function loadData(): void {
+	const data = [] as Array<UTSJSONObject>
+	for (let i = 0; i < 8; i++) {
+		data.push({
+			id: i,
+			name: `Item ${i}`
+		} as UTSJSONObject)
+	}
+	listData.value = data
+	listData2.value = data.slice()
+	listData3.value = data.slice()
+}
+
+function getObjectNumber(item: UTSJSONObject, key: string): number {
+	const value = item[key]
+	if (typeof value === 'number') {
+		return value
+	}
+	if (value == null) {
+		return 0
+	}
+	const parsed = parseInt(value.toString())
+	return isNaN(parsed) ? 0 : parsed
+}
+
+function getObjectString(item: UTSJSONObject, key: string): string {
+	const value = item[key]
+	return value == null ? '' : value.toString()
+}
+
+function getItemId(item: UTSJSONObject): number {
+	return getObjectNumber(item, 'id')
+}
+
+function getItemName(item: UTSJSONObject): string {
+	return getObjectString(item, 'name')
+}
+
+function getAnyItemId(item: any | null): number {
+	if (item == null) return 0
+	const obj = item as UTSJSONObject
+	return getObjectNumber(obj, 'id')
+}
+
+function getAnyItemName(item: any | null): string {
+	if (item == null) return ''
+	const obj = item as UTSJSONObject
+	return getObjectString(obj, 'name')
+}
+
+function formatDistance(distance: any | null): number {
+	if (typeof distance === 'number') {
+		return Math.round(distance)
+	}
+	if (distance == null) return 0
+	return Math.round(parseFloat(distance.toString()))
+}
+
+function onRefresh(): void {
+	refreshing.value = true
+	setTimeout(() => {
+		loadData()
+		refreshing.value = false
+	}, 2000)
+}
+
+function onRefresh1(): void {
+	refreshing1.value = true
+	setTimeout(() => {
+		loadData()
+		refreshing1.value = false
+	}, 2000)
+}
+
+function onRefresh2(): void {
+	refreshing2.value = true
+	setTimeout(() => {
+		loadData()
+		refreshing2.value = false
+	}, 2000)
+}
+
+function onRefresh3(): void {
+	refreshing3.value = true
+	setTimeout(() => {
+		loadData()
+		refreshing3.value = false
+	}, 2000)
+}
+
+function onScroll3(_scrollTop: number): void {}
+
+function onScrollToLower(): void {
+	loadmoreConfig.value['status'] = 'loading'
+	setTimeout(() => {
+		listData2.value.push({
+			id: listData2.value.length,
+			name: 'Item ' + listData2.value.length
+		} as UTSJSONObject)
+		loadmoreConfig.value['status'] = 'loadmore'
+	}, 2000)
+}
+
+function onLoadmore(): void {
+	onScrollToLower()
+}
+
+loadData()
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

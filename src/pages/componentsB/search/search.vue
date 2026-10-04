@@ -1,0 +1,231 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value1"
+						:show-action="false"
+						@change="change"
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">设置初始值</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value2"
+						:show-action="false"
+					></up-search>
+					{{value2}}
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">搜索框形状</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value3"
+						:show-action="false"
+						shape="round"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value4"
+						:show-action="false"
+						shape="square"
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">右侧控件</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search v-model="value5"></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁用输入框</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						placeholder="输入框被禁用,可以监听点击事件进行跳转"
+						disabled
+						:show-action="false"
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">点击左侧图标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value6"
+						:show-action="false"
+						@clickIcon="clickIcon"
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">搜索框内容水平对齐</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value7"
+						:show-action="false"
+						input-align="left"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value8"
+						:show-action="false"
+						input-align="center"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value9"
+						:show-action="false"
+						input-align="right"
+					></up-search>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value10"
+						:show-action="false"
+						borderColor="rgb(230, 230, 230)"
+						bgColor="#fff"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value11"
+						:show-action="false"
+						search-icon-color="#FF0000"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value12"
+						:show-action="false"
+						placeholder-color="#FF0000"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value13"
+						:show-action="false"
+						color="#FF0000"
+					></up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value14"
+						label="手机"
+						:show-action="false"
+					>
+					</up-search>
+				</view>
+			</view>
+			<view class="u-demo-block__content m-t-10">
+				<view class="u-page__tag-item">
+					<up-search
+						v-model="value15"
+						search-icon="scan"
+						:show-action="false"
+					>
+					</up-search>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref, watch } from 'vue'
+	import { toast } from '@/uni_modules/uview-ultra/libs/function/index'
+
+	const value1 = ref('')
+	const value2 = ref('天山雪莲')
+	const value3 = ref('')
+	const value4 = ref('')
+	const value5 = ref('')
+	const value6 = ref('')
+	const value7 = ref('')
+	const value8 = ref('')
+	const value9 = ref('')
+	const value10 = ref('')
+	const value11 = ref('')
+	const value12 = ref('')
+	const value13 = ref('')
+	const value14 = ref('')
+	const value15 = ref('')
+
+	watch(value1, (newValue: string) => {
+		// console.log('value1', newValue)
+	})
+
+	function change(e: string) {
+		console.log(e)
+	}
+
+	function clickIcon() {
+		toast('点击了左侧图标')
+	}
+</script>
+
+<style lang="scss">
+	.u-page__tag-item {
+		@include flex(column);
+		flex: 1
+	}
+
+	.m-t-10 {
+		margin-top: 10px;
+	}
+</style>

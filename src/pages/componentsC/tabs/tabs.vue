@@ -1,0 +1,286 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础演示</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list1" @click="click" :current="3">
+				</up-tabs>
+			</view>
+		</view>
+		<view
+			class="u-demo-block"
+			style="margin-bottom: 0;"
+		>
+			<view class="u-demo-block__title">
+				<text class="text">粘性布局</text>
+			</view>
+		</view>
+		<up-sticky bgColor="#fff">
+			<up-tabs
+				:list="list1"
+			>
+			</up-tabs>
+		</up-sticky>
+		<up-gap
+			height="23"
+			bgColor="#fff"
+		></up-gap>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">显示徽标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list2">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁止滚动</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list6" :scrollable="false">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁用菜单</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list3">
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义样式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs
+					:list="list4"
+					lineWidth="30"
+					lineColor="#f56c6c"
+					:activeStyle="{
+						color: '#303133',
+						fontWeight: 'bold',
+						transform: 'scale(1.05)'
+					}"
+					:inactiveStyle="{
+						color: '#606266',
+						transform: 'scale(1)'
+					}"
+					itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+				>
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">滑块设置背景图</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs
+					:list="list4"
+					lineWidth="20"
+					lineHeight="7"
+					:lineColor="`url(${lineBg}) 100% 100%`"
+					:activeStyle="{
+						color: '#303133',
+						fontWeight: 'bold',
+						transform: 'scale(1.05)'
+					}"
+					:inactiveStyle="{
+						color: '#606266',
+						transform: 'scale(1)'
+					}"
+					itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+				>
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义内容插槽</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list1">
+					<template #default="{item, keyName}">
+						<text class="u-tabs__wrapper__nav__item__text"
+							style="color: red">
+							{{item != null ? (item)[keyName] : '-'}}
+						</text>
+					</template>
+				</up-tabs>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">右侧自定义插槽</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs :list="list1" v-model:current="list1Current">
+					<template #right>
+						<view
+							style="padding-left: 4px;"
+							@tap="toastSlotClick"
+						>
+							<up-icon
+								name="list"
+								size="21"
+								bold
+							></up-icon>
+						</view>
+					</template>
+				</up-tabs>
+				<up-button type="primary" size="small" style="width: 120px;"
+					@click="nextTab" :text="'切换下一个' + list1Current">
+				</up-button>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">在swiper中使用</text>
+			</view>
+			<view class="u-demo-block__content">
+				<swiper class="swiper" >
+				  <swiper-item item-id="A">
+					<up-tabs :list="list1">
+						<template #default="{item, keyName}">
+							<text class="u-tabs__wrapper__nav__item__text"
+								style="color: red">
+								{{item != null ? (item)[keyName] : '-'}}
+							</text>
+						</template>
+					</up-tabs>
+				  </swiper-item>
+				  <swiper-item item-id="B">
+					  <up-tabs
+						:list="list4"
+						lineWidth="30"
+						lineColor="#f56c6c"
+						:activeStyle="{
+							color: '#303133',
+							fontWeight: 'bold',
+							transform: 'scale(1.05)'
+						}"
+						:inactiveStyle="{
+							color: '#606266',
+							transform: 'scale(1)'
+						}"
+						itemStyle="padding-left: 15px; padding-right: 15px; height: 34px;"
+					  >
+					  </up-tabs>
+				  </swiper-item>
+				</swiper>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">tabs-pro 内容插槽</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-tabs-pro :list="proList" v-model:current="proCurrent" shapeMode="capsule" showContent>
+					<template #default="{ item, index, value }">
+						<view style="padding: 12px 0;">
+							<up-text :text="'第 ' + (parseInt(index.toString()) + 1).toString() + ' 项：' + value" />
+						</view>
+					</template>
+				</up-tabs-pro>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { toast } from '@/uni_modules/uview-ultra/index.js'
+
+	const lineBg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAOCAYAAABdC15GAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFxSURBVHgBzZNRTsJAEIb/WTW+lpiY+FZPIDew3ABP4GJ8hxsI9zBpOYHeQDwBPQI+mRiRvpLojtPdYhCorQqF/6GdbGd2vvwzBXZcNAt4oj1ANeUoAT5iqkUjbEFLHNmhD1YPEvpZ3ghkGlVDCkc94/BmHMq998I5ONiY1ZBfpKAyuOtgAc5yOEDmYEWNh32BHF91sGHZHmwW4azciN9aQwnz3SJEgOmte+R2tdLprTYoa50mvuomlLpD4Y3oQZnov6D2RzCqI93bWOHaEmAGqQUyRBlZR1WfarcD/EJ2z8DtzDGvsMCwpm8XOCfDUsVOCYhiqRxI/CTQo4UOvjzO7Pow18vfywneuUHHUUxLn55lLw5JFpZ8bEUcY8oXdOLWiHLTxvoGpLqoUmy6dBT15o/ox3znpoycAmxUsiJTbs1cmxeVKp+0zmFIS7bGWiVghC7Vwse8jFKAX9eljh4ggKLLv7uaQvG9/F59Oo2SouxPu7OTCxN/s8wAAAAASUVORK5CYII="
+	const list1 = [
+		{ name: '关注' },
+		{ name: '推荐' },
+		{ name: '电影' },
+		{ name: '科技' },
+		{ name: '音乐' },
+		{ name: '美食' },
+		{ name: '文化' },
+		{ name: '财经' },
+		{ name: '手工' }
+	]
+	const list2 = [
+		{ name: '关注' },
+		{
+			name: '推荐',
+			badge: { isDot: true }
+		},
+		{
+			name: '电影',
+			badge: { value: 5 }
+		},
+		{ name: '科技' },
+		{ name: '音乐' },
+		{ name: '美食' },
+		{ name: '文化' },
+		{ name: '财经' },
+		{ name: '手工' }
+	]
+	const list3 = [
+		{ name: '关注' },
+		{ name: '推荐' },
+		{ name: '电影', disabled: true },
+		{ name: '科技' },
+		{ name: '音乐' },
+		{ name: '美食' },
+		{ name: '文化' },
+		{ name: '财经' },
+		{ name: '手工' }
+	]
+	const list4 = [
+		{ name: '关注' },
+		{
+			name: '推荐',
+			badge: { isDot: true }
+		},
+		{ name: '电影' },
+		{ name: '科技' },
+		{ name: '音乐' },
+		{ name: '美食' },
+		{ name: '文化' },
+		{ name: '财经' },
+		{ name: '手工' }
+	]
+	const list6 = [
+		{ name: '关注' },
+		{ name: '推荐' },
+		{ name: '电影' },
+		{ name: '科技' }
+	]
+	const proList = [{ name: '概览' }, { name: '详情' }, { name: '设置' }]
+	const proCurrent = ref(0)
+	const list1Current = ref(1)
+
+	function click(item: UTSJSONObject) {
+		console.log('item', item)
+	}
+
+	function nextTab() {
+		if (list1.length <= (list1Current.value + 1)) {
+			list1Current.value = 0
+		} else {
+			list1Current.value = list1Current.value + 1
+		}
+	}
+
+	function toastSlotClick() {
+		toast('插槽被点击')
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding-bottom: 500px;
+	}
+</style>

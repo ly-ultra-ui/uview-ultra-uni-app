@@ -1,0 +1,188 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value1"
+						@change="change"
+					></up-switch>
+					{{value1}}
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch v-model="value2"></up-switch>
+					{{value2}}
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">加载中</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value3"
+						loading
+					></up-switch>
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value4"
+						loading
+					></up-switch>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁用状态</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value5"
+						disabled
+					></up-switch>
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value6"
+						disabled
+					></up-switch>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义尺寸</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value7"
+						size="28"
+					></up-switch>
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value8"
+						size="20"
+					></up-switch>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义颜色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value9"
+						activeColor="#f56c6c"
+						loading
+					></up-switch>
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value10"
+						activeColor="#5ac725"
+						loading
+					></up-switch>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义样式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						:space="2"
+						v-model="value11"
+						activeColor="#f56c6c"
+						inactiveColor="rgb(230, 230, 230)"
+					></up-switch>
+				</view>
+				<view class="u-page__tag-item">
+					<up-switch
+						space="2"
+						v-model="value12"
+						activeColor="#f9ae3d"
+						inactiveColor="rgb(230, 230, 230)"
+					></up-switch>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">异步控制</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-switch
+						v-model="value13"
+						asyncChange
+						@change="asyncChange"
+					></up-switch>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref, watch } from 'vue'
+
+	const value1 = ref(false)
+	const value2 = ref(true)
+	const value3 = ref(false)
+	const value4 = ref(true)
+	const value5 = ref(false)
+	const value6 = ref(true)
+	const value7 = ref(false)
+	const value8 = ref(true)
+	const value9 = ref(true)
+	const value10 = ref(true)
+	const value11 = ref(false)
+	const value12 = ref(true)
+	const value13 = ref(true)
+
+	watch(value1, (newValue: boolean) => {
+		console.log('v-model', newValue)
+	})
+
+	function change(e: any) {
+		console.log('change', e)
+	}
+
+	function asyncChange(e: boolean) {
+		uni.showModal({
+			content: e ? '确定要打开吗' : '确定要关闭吗',
+			success: (res) => {
+				if (res.confirm) {
+					value13.value = e
+				}
+			}
+		})
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		&__tag-item {
+			margin-right: 30px;
+		}
+	}
+
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+</style>

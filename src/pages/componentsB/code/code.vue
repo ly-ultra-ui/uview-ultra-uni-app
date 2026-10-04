@@ -1,0 +1,151 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-code
+				    ref="uCode"
+				    @change="codeChange"
+				    seconds="20"
+					change-text="XS获取"
+					@start="disabled1 = true"
+					@end="disabled1 = false"
+				></up-code>
+				<up-button
+				    @tap="getCode"
+				    :text="tips"
+				    type="success"
+					size="small"
+					:disabled="disabled1"
+				></up-button>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">保持倒计时(开始后，左上角返退出此页面再进入，会发现倒计时还在继续)</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-code
+				    ref="uCode1"
+				    @change="codeChange1"
+				    keep-running
+				    change-text="倒计时XS"
+					@start="disabled2 = true"
+					@end="disabled2 = false"
+				></up-code>
+				<up-button
+					type="primary"
+				    @tap="getCode1"
+				    :text="tips1"
+					size="small"
+					:disabled="disabled2"
+				></up-button>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">文本样式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-code
+				    ref="uCode2"
+				    @change="codeChange2"
+				    keep-running
+					start-text="点我获取验证码"
+				></up-code>
+				<text
+				    @tap="getCode2"
+				    :text="tips2"
+					class="u-page__code-text"
+				>{{tips2}}</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { toast } from '@/uni_modules/uview-ultra/index.js'
+
+	const tips = ref('')
+	const tips1 = ref('')
+	const tips2 = ref('')
+	const disabled1 = ref(false)
+	const disabled2 = ref(false)
+	const disabled3 = ref(false)
+	const uCode = ref<ComponentPublicInstance | null>(null)
+	const uCode1 = ref<ComponentPublicInstance | null>(null)
+	const uCode2 = ref<ComponentPublicInstance | null>(null)
+
+	function codeChange(text: string) {
+		tips.value = text
+	}
+
+	function codeChange1(text: string) {
+		tips1.value = text
+	}
+
+	function codeChange2(text: string) {
+		tips2.value = text
+	}
+
+	function getCode() {
+		if ((uCode.value?.canGetCode() as boolean)) {
+			uni.showLoading({
+				title: '正在获取验证码'
+			})
+			setTimeout(() => {
+				uni.hideLoading()
+				toast('验证码已发送')
+				uCode.value?.start()
+			}, 2000)
+		} else {
+			toast('倒计时结束后再发送')
+		}
+	}
+
+	function getCode1() {
+		if ((uCode1.value?.canGetCode() as boolean)) {
+			uni.showLoading({
+				title: '正在获取验证码'
+			})
+			setTimeout(() => {
+				uni.hideLoading()
+				toast('验证码已发送')
+				uCode1.value?.start()
+			}, 2000)
+		} else {
+			toast('倒计时结束后再发送')
+		}
+	}
+
+	function getCode2() {
+		if ((uCode2.value?.canGetCode() as boolean)) {
+			uni.showLoading({
+				title: '正在获取验证码'
+			})
+			setTimeout(() => {
+				uni.hideLoading()
+				toast('验证码已发送')
+				uCode2.value?.start()
+			}, 2000)
+		} else {
+			toast('倒计时结束后再发送')
+		}
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		&__code-text {
+			color: $u-primary;
+			font-size: 15px;
+		}
+	}
+	
+	.u-demo-block__content {
+		@include flex;
+	}
+</style>

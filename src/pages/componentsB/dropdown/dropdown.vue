@@ -1,0 +1,188 @@
+<template>
+	<view class="u-page">
+		<view class="u-m-p-50">
+			<view class="u-demo-area u-flex u-row-center">
+				<up-dropdown :close-on-click-mask="mask" ref="upDropdownRef"
+					:activeColor="activeColor" :borderBottom="borderBottom">
+					<up-dropdown-item @change="change" v-model="value1" title="距离" :options="options1"></up-dropdown-item>
+					<up-dropdown-item @change="change" v-model="value2" title="温度" :options="options2"></up-dropdown-item>
+					<up-dropdown-item title="属性">
+						<view class="slot-content">
+							<view class="item-box">
+								<view class="item" :class="[item['active'] ? 'active' : '']"
+									@tap="tagClick(index)"
+									v-for="(item, index) in list" :key="index">
+									{{item['label']}}
+								</view>
+							</view>
+							<up-button type="primary" @click="closeDropdown">确定</up-button>
+						</view>
+					</up-dropdown-item>
+				</up-dropdown>
+			</view>
+		</view>
+		<view class="u-config-wrap">
+            <view class="u-demo-block">
+                <view class="u-demo-block__title">
+				<text class="text">参数配置</text>
+			</view>
+            </view>
+            <view class="u-demo-block">
+                <view class="u-demo-block__title">
+				<text class="text">下边框</text>
+			</view>
+                <view class="u-demo-block__content">
+                    <up-subsection current="1" :list="['有', '无']" @change="borderChange"></up-subsection>
+                </view>
+            </view>
+			<view class="u-demo-block">
+                <view class="u-demo-block__title">
+				<text class="text">激活颜色</text>
+			</view>
+                <view class="u-demo-block__content">
+                    <up-subsection :list="['#2979ff', '#ff9900', '#19be6b']" @change="activeColorChange"></up-subsection>
+                </view>
+            </view>
+            <view class="u-demo-block">
+                <view class="u-demo-block__title">
+				<text class="text">遮罩是否可点击</text>
+			</view>
+                <view class="u-demo-block__content">
+                    <up-subsection :list="['是', '否']" @change="maskChange"></up-subsection>
+                </view>
+            </view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { toast } from '@/uni_modules/uview-ultra/libs/function/index.js'
+
+	const value1 = ref('')
+	const value2 = ref('2')
+	const mask = ref(true)
+	const options1 = [
+		{
+			label: '默认排序',
+			value: 1,
+		},
+		{
+			label: '距离优先',
+			value: 2,
+		},
+		{
+			label: '价格优先',
+			value: 3,
+		}
+	]
+	const options2 = [
+		{
+			label: '去冰',
+			value: 1,
+		},
+		{
+			label: '加冰',
+			value: 2,
+		},
+		{
+			label: '正常温',
+			value: 3,
+		},
+		{
+			label: '加热',
+			value: 4,
+		},
+		{
+			label: '极寒风暴',
+			value: 5,
+		}
+	]
+	const list = ref([
+		{
+			label: '琪花瑶草',
+			active: true,
+		},
+		{
+			label: '清词丽句',
+			active: false,
+		},
+		{
+			label: '宛转蛾眉',
+			active: false,
+		},
+		{
+			label: '煦色韶光',
+			active: false,
+		},
+		{
+			label: '鱼沉雁落',
+			active: false,
+		},
+		{
+			label: '章台杨柳',
+			active: false,
+		},
+		{
+			label: '霞光万道',
+			active: false,
+		}
+	])
+	const borderBottom = ref(false)
+	const activeColor = ref('#2979ff')
+
+	function borderChange(index: number) {
+		borderBottom.value = index == 0 ? true : false
+	}
+
+	function activeColorChange(index: number) {
+		activeColor.value = ['#2979ff', '#ff9900', '#19be6b'][index]
+	}
+
+	function change(index: number) {
+		toast(`点击了第${index}项`)
+	}
+
+	function closeDropdown() {
+		// upDropdownRef.value?.close()
+	}
+
+	function tagClick(index: number) {
+		list.value[index]['active'] = !(list.value[index]['active'] as boolean)
+	}
+
+	function maskChange(index: number) {
+		mask.value = index == 0 ? true : false
+	}
+</script>
+
+<style scoped lang="scss">
+	.u-config-wrap {
+		padding: 20px;
+	}
+	
+	.slot-content {
+		background-color: #FFFFFF;
+		padding: 24rpx;
+		
+		.item-box {
+			margin-bottom: 50rpx;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			
+			.item {
+				border: 1px solid $u-primary;
+				color: $u-primary;
+				padding: 8rpx 40rpx;
+				border-radius: 100rpx;
+				margin-top: 30rpx;
+			}
+			
+			.active {
+				color: #FFFFFF;
+				background-color: $u-primary;
+			}
+		}
+	}
+</style>

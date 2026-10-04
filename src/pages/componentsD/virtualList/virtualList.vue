@@ -1,0 +1,64 @@
+<template>
+  <view class="u-page">
+    <up-alert class="u-m-b-20" description="PC端查看时需要触摸仿真模式"></up-alert>
+    <view class="u-page__item">
+      <text class="u-page__item__title" style="margin-top: 0;">基本使用</text>
+      <view class="u-page__item__content">
+        <up-virtual-list
+          :list-data="listData"
+          :item-height="49"
+          height="800px"
+          v-model:scrollTop="scrollTop"
+          @scroll="onScroll"
+        >
+          <template #default="{ item, index }">
+            <up-cell class="list-item" :title="getItemTitle(item)"></up-cell>
+          </template>
+        </up-virtual-list>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+
+import { ref } from 'vue'
+
+const scrollTop = ref(0)
+const listData = ref([] as Array<UTSJSONObject>)
+
+function loadData(): void {
+  const data = [] as Array<UTSJSONObject>
+  for (let i = 0; i < 10000; i++) {
+    data.push({
+      id: i,
+      name: `Item ${i}`
+    } as UTSJSONObject)
+  }
+  listData.value = data
+}
+
+onLoad((_options: OnLoadOptions) => {
+  loadData()
+})
+
+function getItemTitle(item: any | null): string {
+  if (item == null) return ''
+  const data = item as UTSJSONObject
+  const id = data['id']
+  return 'Item ' + (id == null ? '' : id.toString())
+}
+
+function onScroll(_scrollTop: number): void {
+}
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

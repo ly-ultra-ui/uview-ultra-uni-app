@@ -1,0 +1,131 @@
+<template>
+	<view class="u-page">
+		<up-gap
+			height="30"
+			bgColor="#fff"
+		></up-gap>
+		<up-cell-group>
+			<up-cell
+				:titleStyle="{fontWeight: 500}"
+				@click="openNotify(item['notifyData'])"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-notify ref="upNotifyRef"></up-notify>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const upNotifyRef = ref<ComponentPublicInstance | null>(null)
+	const list = [{
+			notifyData: {
+				message: 'notify顶部提示',
+				type: 'primary',
+				color: '#ffffff',
+				bgColor: '',
+				fontSize: 15,
+				duration: 3000
+			} as UTSJSONObject,
+			title: '主要通知',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/main.png'
+		}, {
+			notifyData: {
+				message: 'notify顶部提示',
+				type: 'success',
+				color: '#ffffff',
+				bgColor: '',
+				fontSize: 15,
+				duration: 3000,
+				safeAreaInsetTop: false
+			} as UTSJSONObject,
+			title: '成功通知',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/success.png'
+		}, {
+			notifyData: {
+				message: 'notify顶部提示',
+				type: 'error',
+				color: '#ffffff',
+				bgColor: '',
+				fontSize: 14,
+				duration: 3000,
+				safeAreaInsetTop: false
+			} as UTSJSONObject,
+			title: '危险通知',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/error.png'
+		}, {
+			notifyData: {
+				message: 'notify顶部提示',
+				type: 'warning',
+				color: '#ffffff',
+				bgColor: '',
+				fontSize: 15,
+				duration: 3000,
+				safeAreaInsetTop: false
+			} as UTSJSONObject,
+			title: '警告通知',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/warning.png'
+		},
+		{
+			notifyData: {
+				message: 'notify顶部提示',
+				color: '#fff',
+				bgColor: '#000',
+				fontSize: 15,
+				duration: 3000,
+				safeAreaInsetTop: false
+			} as UTSJSONObject,
+			title: '自定义样式',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customStyle.png'
+		},
+		{
+			notifyData: {
+				message: 'notify顶部提示',
+				type: 'primary',
+				color: '#ffffff',
+				bgColor: '',
+				fontSize: 15,
+				duration: 6000,
+				safeAreaInsetTop: false
+			} as UTSJSONObject,
+			title: '自定义时间',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/customTime.png'
+		},
+		{
+			notifyData: {
+				message: 'notify顶部提示',
+				color: '#fff',
+				bgColor: '',
+				fontSize: 15,
+				duration: 3000,
+				safeAreaInsetTop: true
+			} as UTSJSONObject,
+			title: '插入状态栏高度',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/notify/height.png'
+		}
+	]
+
+	function openNotify(params: any | null) {
+		upNotifyRef.value?.show({
+			...(params as UTSJSONObject)
+		})
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

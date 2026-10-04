@@ -1,0 +1,136 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__top-box">
+			<view class="u-demo-block__title">
+				<text class="text">演示效果</text>
+			</view>
+		</view>
+		<up-empty
+			:mode="mode"
+			:icon="imgList[mode]"
+		>
+			<up-button
+				size="small"
+				type="primary"
+				:style="{marginTop:10+'px'}"
+				v-if="mode=='car'"
+				text="查看更多商品"
+			>
+			</up-button>
+		</up-empty>
+		<view class="empty-select">
+			<up-cell
+				:titleStyle="{fontWeight: 500}"
+				@click="openImg(item['imgName'].toString())"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const baseUrl = 'https://uview-plus.jiangruyi.com/uview/empty/'
+	const mode = ref('car')
+	const imgList = {
+		car: baseUrl + 'car.jpg',
+		address: baseUrl + 'address.jpg',
+		comment: baseUrl + 'comment.jpg',
+		coupon: baseUrl + 'coupon.jpg',
+		data: baseUrl + 'data.jpg',
+		history: baseUrl + 'history.jpg',
+		list: baseUrl + 'list.jpg',
+		message: baseUrl + 'message.jpg',
+		news: baseUrl + 'news.jpg',
+		order: baseUrl + 'order.jpg',
+		page: baseUrl + 'page.jpg',
+		permission: baseUrl + 'permission.jpg',
+		search: baseUrl + 'search.jpg',
+		wifi: baseUrl + 'wifi.jpg',
+	} as UTSJSONObject
+	const list = [{
+			imgName: 'car',
+			title: '购物车为空(同时传入slot)',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/car.png'
+		},
+		{
+			imgName: 'data',
+			title: '数据为空',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/data.png'
+		}, {
+			imgName: 'comment',
+			title: '评论为空',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/comment.png'
+		}, {
+			imgName: 'coupon',
+			title: '没有优惠券',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/coupon.png'
+		}, {
+			imgName: 'history',
+			title: '无历史记录',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/history.png'
+		}, {
+			imgName: 'list',
+			title: '列表为空',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/list.png'
+		}, {
+			imgName: 'message',
+			title: '消息列表为空',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/message.png'
+		}, {
+			imgName: 'news',
+			title: '无新闻列表',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/news.png'
+		}, {
+			imgName: 'order',
+			title: '订单为空',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/order.png'
+		}, {
+			imgName: 'page',
+			title: '页面不存在',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/page.png'
+		}, {
+			imgName: 'permission',
+			title: '无权限',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/permission.png'
+		}, {
+			imgName: 'search',
+			title: '没有搜索结果',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/search.png'
+		}, {
+			imgName: 'wifi',
+			title: '没有WiFi',
+			iconUrl: 'https://uview-plus.jiangruyi.com/uview/demo/empty/wifi.png'
+		},
+	]
+
+	function openImg(imgName: string) {
+		mode.value = imgName
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 40rpx 0px;
+
+		&__top-box {
+			padding-left: 40rpx;
+		}
+	}
+
+	.empty-select {
+		margin-top: 10px;
+	}
+</style>

@@ -1,0 +1,154 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">基础功能</text>
+			<view class="u-demo-block__content">
+				<up-line-progress :percentage="percentage1">
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">不显示百分比</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    :showText="false"
+				    :percentage="percentage2"
+				>
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义高度</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    height="8"
+				    :showText="false"
+				    :percentage="percentage3"
+				>
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">自定义颜色</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    height="8"
+				    :showText="false"
+				    :percentage="percentage4"
+				    activeColor="#3c9cff"
+				    inactiveColor="#f3f4f6"
+				>
+				</up-line-progress>
+			</view>
+		</view>
+		<view
+		    class="u-demo-block"
+		    v-if="!androidNvue"
+		>
+			<text class="u-demo-block__title">自定义样式(不支持安卓环境的nvue)</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    height="8"
+				    :showText="false"
+				    :percentage="percentage5"
+				    activeColor="#3c9cff"
+				    inactiveColor="#f3f4f6"
+				>
+					<text class="u-percentage-slot">{{percentage4}}%</text>
+				</up-line-progress>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<text class="u-demo-block__title">手动加减</text>
+			<view class="u-demo-block__content">
+				<up-line-progress
+				    height="8"
+				    :showText="false"
+				    :percentage="percentage6"
+				    activeColor="#3c9cff"
+				    inactiveColor="#f3f4f6"
+				>
+				</up-line-progress>
+				<view class="button-group">
+					<view class="button-group__circle" hover-class="u-hover-class" @click="computedWidth('minus')">
+						<text class="button-group__circle__text">减少</text>
+					</view>
+					<view class="button-group__circle" hover-class="u-hover-class" @click="computedWidth('plus')">
+						<text class="button-group__circle__text">增加</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+
+	import { ref } from 'vue'
+	import { sleep, range } from '../../../uni_modules/uview-ultra/libs/function/index.js'
+
+	const androidNvue = ref(false)
+	const percentage1 = ref(30)
+	const percentage2 = ref(40)
+	const percentage3 = ref(50)
+	const percentage4 = ref(60)
+	const percentage5 = ref(70)
+	const percentage6 = ref(50)
+
+	onLoad((_options: OnLoadOptions) => {
+		// #ifdef APP-NVUE
+		androidNvue.value = uni.$u.os() === 'android'
+		// #endif
+		sleep(2500).then(() => {
+			percentage1.value = 120
+		})
+	})
+
+	function computedWidth(type: string) {
+		if (type === 'plus') {
+			percentage6.value = range(0, 100, percentage6.value + 10)
+		} else {
+			percentage6.value = range(0, 100, percentage6.value - 10)
+		}
+	}
+</script>
+
+<style lang="scss">
+	.u-page {}
+
+	.u-percentage-slot {
+		padding: 1px 5px;
+		background-color: $u-warning;
+		color: #fff;
+		border-radius: 100px;
+		font-size: 10px;
+		margin-right: -5px;
+	}
+
+	.u-demo-block__content {
+		flex-direction: column !important;
+		flex-wrap: nowrap;
+		align-items: stretch;
+	}
+
+	.button-group {
+		@include flex;
+		justify-content: center;
+
+		&__circle {
+			width: 50px;
+			height: 50px;
+			background-color: #dbfbdb;
+			border-radius: 100px;
+			justify-content: center;
+			align-items: center;
+			margin: 30px 30px;
+
+			&__text {
+				color: rgb(25, 190, 107);
+				font-size: 13px;
+			}
+		}
+	}
+</style>

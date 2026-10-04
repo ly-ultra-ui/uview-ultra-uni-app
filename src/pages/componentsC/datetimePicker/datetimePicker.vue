@@ -1,0 +1,252 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="datetimePicker 时间日期选择器"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
+				@click="showDatetimePicker(index)"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-datetime-picker
+			:show="show1"
+			v-model="value1"
+			mode="datetime"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show2"
+			v-model="value2"
+			mode="date"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show3"
+			v-model="value3"
+			mode="year-month"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show4"
+			v-model="value4"
+			mode="time"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show5"
+			v-model="value5"
+			:filter="filter"
+			mode="date"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show6"
+			v-model="value6"
+			mode="date"
+			:formatter="formatter"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show7"
+			v-model="value7"
+			mode="datetime"
+			:minDate="1587524800000"
+			:maxDate="1786778555000"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show8"
+			v-model="value8"
+			mode="time"
+			:minHour="minHour8"
+			:minMinute="minMinute8"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="changeTime8"
+			@close="close"
+		></up-datetime-picker>
+		<up-datetime-picker
+			:show="show9"
+			v-model="value9"
+			mode="datetime"
+			hasInput
+			format="yyyy-mm-dd hh:MM"
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@change="change"
+			@close="close"
+		></up-datetime-picker>
+	</view>
+</template>
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { timeFormat, toast, padZero } from '@/uni_modules/uview-ultra/libs/function/index.js'
+
+	const current = ref(0)
+	const value1 = ref(new Date().getTime())
+	const value2 = ref(new Date().getTime())
+	const value3 = ref(new Date().getTime())
+	const value4 = ref('05:28')
+	const value5 = ref(new Date().getTime())
+	const value6 = ref(new Date().getTime())
+	const value7 = ref(new Date().getTime())
+	// 「只能选当前时间之后」示例：初始值为当前时间，minHour固定为当前小时，
+	// minMinute随所选小时动态变化（选中当前小时时不早于当前分钟，选中之后的小时则从0开始）
+	const now8 = new Date()
+	const value8 = ref(`${padZero(now8.getHours())}:${padZero(now8.getMinutes())}`)
+	const minHour8 = ref(now8.getHours())
+	const minMinute8 = ref(now8.getMinutes())
+	const value9 = ref(new Date().getTime())
+	const show1 = ref(false)
+	const show2 = ref(false)
+	const show3 = ref(false)
+	const show4 = ref(false)
+	const show5 = ref(false)
+	const show6 = ref(false)
+	const show7 = ref(false)
+	const show8 = ref(false)
+	const show9 = ref(false)
+	const list = [
+		{ title: '完整日期时间', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/6.png' },
+		{ title: '年月日', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/4.png' },
+		{ title: '年月', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/3.png' },
+		{ title: '时间', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/5.png' },
+		{ title: '过滤器(保留偶数年)', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/2.png' },
+		{ title: '格式化', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/1.png' },
+		{ title: '限制最大最小值', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/7.png' },
+		{ title: '只能选当前时间之后(动态minMinute)', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/5.png' },
+		{ title: 'hasInput输入框模式+format', iconUrl: 'https://cdn.uviewui.com/uview/demo/datetime-picker/6.png' }
+	]
+
+	function setShow(index: number, value: boolean): void {
+		if (index == 1) show1.value = value
+		if (index == 2) show2.value = value
+		if (index == 3) show3.value = value
+		if (index == 4) show4.value = value
+		if (index == 5) show5.value = value
+		if (index == 6) show6.value = value
+		if (index == 7) show7.value = value
+		if (index == 8) show8.value = value
+		if (index == 9) show9.value = value
+	}
+
+	function close() {
+		setShow(current.value, false)
+	}
+
+	function cancel() {
+		setShow(current.value, false)
+	}
+
+	function result(time: string, mode: string): void {
+		switch (mode) {
+			case 'datetime':
+				toast(timeFormat(time, 'yyyy-mm-dd hh:MM'))
+			case 'date':
+				toast(timeFormat(time, 'yyyy-mm-dd'))
+			case 'year-month':
+				toast(timeFormat(time, 'yyyy-mm'))
+			case 'time':
+				toast(time)
+			default:
+		}
+	}
+
+	function confirm(e: UTSJSONObject) {
+		setShow(current.value, false)
+		result(e['value']!.toString(), e['mode']!.toString())
+	}
+
+	function change(e: UTSJSONObject) {
+		// console.log('change', e)
+	}
+
+	// 「只能选当前时间之后」示例的change：根据所选小时动态调整minMinute。
+	// 修复前：改变minMinute会把已选时间重置为初始值，并再次触发change；
+	// 修复后：已选值保留（若低于新minMinute则被夹取上移），且不会重复触发change。
+	function changeTime8(e: UTSJSONObject) {
+		const hour = parseInt(e['value']!.toString().split(':')[0])
+		minMinute8.value = hour <= now8.getHours() ? now8.getMinutes() : 0
+	}
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+
+	function filter(mode: string, options: string[]) {
+		if (mode === 'year') {
+			return options.filter((option: string) => parseInt(option) % 2 == 0)
+		}
+		return options
+	}
+
+	function showDatetimePicker(index: number) {
+		current.value = index + 1
+		setShow(current.value, true)
+	}
+
+	function formatter(type: string, value: string) {
+		if (type === 'year') {
+			return `${value}年`
+		}
+		if (type === 'month') {
+			return `${value}月`
+		}
+		if (type === 'day') {
+			return `${value}日`
+		}
+		return value
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

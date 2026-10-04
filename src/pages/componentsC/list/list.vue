@@ -1,0 +1,68 @@
+<template>
+	<view class="u-page">
+		<up-list
+			@scrolltolower="scrolltolower"
+		>
+			<up-list-item
+				v-for="(item, index) in indexList"
+				:key="index"
+			>
+				<up-cell
+					:title="`列表长度-${index + 1}`"
+				>
+					<template #icon>
+						<up-avatar
+							shape="square"
+							size="35"
+							:src="item.url"
+							customStyle="margin: -3px 5px -3px 0"
+						></up-avatar>
+					</template>
+				</up-cell>
+			</up-list-item>
+		</up-list>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+
+	import { ref } from 'vue'
+	import { random } from '@/uni_modules/uview-ultra/libs/function/index'
+
+	const indexList = ref([] as UTSJSONObject[])
+	const urls = [
+		'https://cdn.uviewui.com/uview/album/1.jpg',
+		'https://cdn.uviewui.com/uview/album/2.jpg',
+		'https://cdn.uviewui.com/uview/album/3.jpg',
+		'https://cdn.uviewui.com/uview/album/4.jpg',
+		'https://cdn.uviewui.com/uview/album/5.jpg',
+		'https://cdn.uviewui.com/uview/album/6.jpg',
+		'https://cdn.uviewui.com/uview/album/7.jpg',
+		'https://cdn.uviewui.com/uview/album/8.jpg',
+		'https://cdn.uviewui.com/uview/album/9.jpg',
+		'https://cdn.uviewui.com/uview/album/10.jpg',
+	]
+
+	function loadmore() {
+		for (let i = 0; i < 30; i++) {
+			indexList.value.push({
+				url: urls[random(0, urls.length - 1)]
+			})
+		}
+	}
+
+	function scrolltolower() {
+		loadmore()
+	}
+
+	onLoad((_options: OnLoadOptions) => {
+		loadmore()
+	})
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

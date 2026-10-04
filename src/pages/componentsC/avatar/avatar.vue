@@ -1,0 +1,188 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础演示</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-avatar :src="src1"></up-avatar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">头像形状</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-avatar-item">
+					<up-avatar
+						:src="src2"
+						shape="circle"
+						@click="click"
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						:src="src3"
+						shape="square"
+					></up-avatar>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">头像尺寸</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-avatar-item">
+					<up-avatar
+						:src="src4"
+						size="30"
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						:src="src5"
+						size="40"
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						:src="src6"
+						size="50"
+					></up-avatar>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">图标头像</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-avatar-item">
+					<up-avatar
+						icon="red-packet-fill"
+						fontSize="22"
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						icon="star-fill"
+						fontSize="22"
+					></up-avatar>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">文字头像(自动背景色)</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-avatar-item">
+					<up-avatar
+						text="U"
+						fontSize="20"
+						randomBgColor
+						:colorIndex="0"
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						text="邓"
+						fontSize="18"
+						randomBgColor
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						text="张"
+						fontSize="18"
+						randomBgColor
+					></up-avatar>
+				</view>
+				<view class="u-avatar-item">
+					<up-avatar
+						text="王"
+						fontSize="18"
+						randomBgColor
+					></up-avatar>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">图片加载失败(显示默认头像)</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-avatar :src="src7"></up-avatar>
+			</view>
+		</view>
+		<!-- #ifdef MP-WEIXIN || MP-QQ || MP-BAIDU -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">小程序开放能力</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-avatar-item">
+					<up-avatar
+						mpAvatar
+						size="60"
+					></up-avatar>
+				</view>
+			</view>
+		</view>
+		<!-- #endif -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">头像组</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-avatar-group
+					:urls="urls"
+					size="35"
+					gap="0.4"
+				></up-avatar-group>
+			</view>
+			<view class="u-demo-block__content" style="margin-top: 20px">
+				<up-avatar-group
+					:urls="urls"
+					size="35"
+					gap="0.6"
+				></up-avatar-group>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	const src1 = './static/uview/album/1.jpg'
+	const src2 = './static/uview/album/2.jpg'
+	const src3 = './static/uview/album/3.jpg'
+	const src4 = './static/uview/album/4.jpg'
+	const src5 = './static/uview/album/5.jpg'
+	const src6 = './static/uview/album/6.jpg'
+	const src7 = './static/uview/album/noExist.jpg'
+	const urls = [
+		'./static/uview/album/1.jpg',
+		'./static/uview/album/2.jpg',
+		'./static/uview/album/3.jpg',
+		'./static/uview/album/4.jpg',
+		'./static/uview/album/7.jpg',
+		'./static/uview/album/6.jpg',
+		'./static/uview/album/5.jpg'
+	]
+
+	function click(name: string) {
+		console.log('click', name)
+	}
+</script>
+
+<style lang="scss">
+	.u-demo-block__content {
+		@include flex;
+		align-items: center;
+	}
+
+	.u-avatar-item {
+		margin-right: 30px;
+	}
+</style>

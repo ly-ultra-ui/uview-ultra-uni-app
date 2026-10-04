@@ -1,0 +1,24 @@
+{
+    "name": "uview-ultra-vue3",
+    "appid": "",
+    "description": "uview-ultra 在 uni-app Vue3 模式下的冒烟与编译门禁工程",
+    "versionName": "0.0.0",
+    "versionCode": "1",
+    "transformPx": false,
+    "vueVersion": "3",
+    "h5": {
+        "router": {
+            "mode": "hash"
+        }
+    },
+    "mp-weixin": {
+        "appid": "",
+        "setting": {
+            "urlCheck": false
+        },
+        "usingComponents": true
+    },
+    "uniStatistics": {
+        "enable": false
+    }
+}

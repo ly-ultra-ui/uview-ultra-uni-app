@@ -1,0 +1,102 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础使用</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-subsection
+					:list="list"
+					mode="subsection"
+					:current="current1"
+					@change="change1"
+				></up-subsection>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">按钮模式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-subsection
+					:list="list"
+					mode="button"
+					:current="current2"
+					@change="change2"
+				></up-subsection>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">更换主题</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-subsection
+					:list="list"
+					mode="subsection"
+					:current="current3"
+					activeColor="#f56c6c"
+					@change="change3"
+				></up-subsection>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">默认位置</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-subsection
+					:list="list"
+					mode="button"
+					:current="current4"
+					activeColor="#f9ae3d"
+					@change="change4"
+				></up-subsection>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const current1 = ref(0)
+	const current2 = ref(0)
+	const current3 = ref(0)
+	const current4 = ref(1)
+	const list = ['未付款', '待评价', '已付款']
+
+	function change1(index: number) {
+		current1.value = index
+	}
+
+	function change2(index: number) {
+		current2.value = index
+	}
+
+	function change3(index: number) {
+		current3.value = index
+	}
+
+	function change4(index: number) {
+		current4.value = index
+	}
+</script>
+
+<style lang="scss">
+	.album {
+		@include flex;
+		align-items: flex-start;
+
+		&__avatar {
+			background-color: $u-bg-color;
+			padding: 5px;
+			border-radius: 3px;
+		}
+
+		&__content {
+			margin-left: 10px;
+			flex: 1;
+		}
+	}
+</style>

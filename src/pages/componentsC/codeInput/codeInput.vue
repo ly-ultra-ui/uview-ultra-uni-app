@@ -1,0 +1,149 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">基础使用</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value1"
+					:maxlength="4"
+					@change="change"
+					@finish="finish"
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">横线模式</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value2"
+					mode="line"
+					:maxlength="4"
+					:bold="true"
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">设置长度</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value3"
+					:maxlength="6"
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">设置间距</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value4"
+					mode="box"
+					:space="0"
+					:maxlength="4"
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">细边框</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value5"
+					mode="box"
+					:space="0"
+					:maxlength="4"
+					hairline
+				></up-code-input>
+			</view>
+			<view
+				class="u-demo-block__content"
+				style="margin-top: 10px;"
+			>
+				<up-code-input
+					v-model="value6"
+					mode="line"
+					:space="10"
+					:maxlength="4"
+					hairline
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">调整颜色</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value7"
+					mode="box"
+					:space="0"
+					:maxlength="4"
+					hairline
+					color="#f56c6c"
+					borderColor="#f56c6c"
+				></up-code-input>
+				<view class="u-demo-block__content" style="margin-top: 10px;">
+					<up-code-input
+						v-model="value10"
+						mode="line"
+						size="30"
+						:maxlength="4"
+						hairline
+						color="#3c9cff"
+						borderColor="#3c9cff"
+					></up-code-input>
+				</view>
+
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">点模式</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value8"
+					mode="box"
+					dot
+					:space="0"
+					:maxlength="4"
+					hairline
+				></up-code-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">预置内容</view>
+			<view class="u-demo-block__content">
+				<up-code-input
+					v-model="value9"
+					mode="box"
+					:space="0"
+					:maxlength="4"
+					hairline
+					fontSize="17"
+				></up-code-input>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const value1 = ref('')
+	const value2 = ref('')
+	const value3 = ref('')
+	const value4 = ref('')
+	const value5 = ref('')
+	const value6 = ref('')
+	const value7 = ref('')
+	const value8 = ref('')
+	const value9 = ref('123')
+	const value10 = ref('34')
+
+	function change(e: any) {
+		console.log('change', e)
+	}
+
+	function finish(e: any) {
+		console.log('finish', e)
+	}
+</script>
+
+<style lang="scss">
+
+</style>

@@ -1,0 +1,292 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__item">
+			<text class="u-page__item__title">基础功能</text>
+			<up-tabbar
+			    :value="value1"
+			    @change="change1"
+			    :fixed="false"
+			    :placeholder="false"
+			    :safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item
+					text="首页"
+					icon="home"
+					@click="click1"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text="放映厅"
+					icon="photo"
+					@click="click1"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text="直播"
+					icon="play-right"
+					@click="click1"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text="我的"
+					icon="account"
+					@click="click1"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">显示徽标</text>
+			<up-tabbar
+			    :value="value2"
+			    :placeholder="false"
+			    @change="change2"
+			    :fixed="false"
+			    :safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item
+				    text="首页"
+				    icon="home"
+				    dot
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="放映厅"
+				    icon="photo"
+				    badge="3"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="直播"
+				    icon="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="我的"
+				    icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">匹配标签的名称</text>
+			<up-tabbar
+			    :placeholder="false"
+			    :value="value3"
+			    @change="change3"
+			    :fixed="false"
+			    :safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item
+				    text="首页"
+				    icon="home"
+				    name="home"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="放映厅"
+				    icon="photo"
+				    name="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="直播"
+				    icon="play-right"
+				    name="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="我的"
+				    name="account"
+				    icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">自定义图标/颜色</text>
+			<up-tabbar
+			    :value="value4"
+			    @change="change4"
+			    :fixed="false"
+			    :placeholder="false"
+			    activeColor="#d81e06"
+			    :safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item text="首页">
+					<template v-slot:active-icon>
+						<image
+						    class="u-page__item__slot-icon"
+						    src="https://uview-plus.jiangruyi.com/uview/common/bell-selected.png"
+						></image>
+					</template>
+					<template v-slot:inactive-icon>
+						<image
+							class="u-page__item__slot-icon"
+							src="https://uview-plus.jiangruyi.com/uview/common/bell.png"
+						></image>
+					</template>
+				</up-tabbar-item>
+				<up-tabbar-item
+				    text="放映厅"
+				    icon="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="直播"
+				    icon="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="我的"
+				    icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">拦截切换事件(点击第二个标签)</text>
+			<up-tabbar
+			    :value="value5"
+			    :fixed="false"
+				@change="change5"
+			    :safeAreaInsetBottom="false"
+			    :placeholder="false"
+			>
+				<up-tabbar-item
+				    text="首页"
+				    icon="home"
+				>
+				</up-tabbar-item>
+				<up-tabbar-item
+				    text="放映厅"
+				    icon="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="直播"
+				    icon="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="我的"
+				    icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">去除上边框</text>
+			<up-tabbar
+			    :value="value7"
+			    :placeholder="false"
+				:border="false"
+			    @change="change7"
+			    :fixed="false"
+			    :safeAreaInsetBottom="false"
+			>
+				<up-tabbar-item
+				    text="首页"
+				    icon="home"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="放映厅"
+				    icon="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="直播"
+				    icon="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+				    text="我的"
+				    icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">固定在底部(固定在屏幕最下方)</text>
+			<up-gap height="150"></up-gap>
+			<up-tabbar
+			    :value="value6"
+			    @change="change6"
+			    :fixed="true"
+				:placeholder="true"
+			    :safeAreaInsetBottom="true"
+			>
+				<up-tabbar-item
+					text="首页"
+					icon="home"
+				>
+				</up-tabbar-item>
+				<up-tabbar-item
+					text="放映厅"
+					icon="photo"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text="直播"
+					icon="play-right"
+				></up-tabbar-item>
+				<up-tabbar-item
+					text="我的"
+					icon="account"
+				></up-tabbar-item>
+			</up-tabbar>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { toast } from '@/uni_modules/uview-ultra/index.js'
+
+const value1 = ref(0)
+const value2 = ref(1)
+const value3 = ref('play-right')
+const value4 = ref(0)
+const value5 = ref(0)
+const value6 = ref(0)
+const value7 = ref(3)
+
+function change2(name: number) {
+  value2.value = name
+}
+
+function change3(name: string) {
+  value3.value = name
+}
+
+function change4(name: number) {
+  value4.value = name
+}
+
+function change6(name: number) {
+  value6.value = name
+}
+
+function change7(name: number) {
+  value7.value = name
+}
+
+function change5(name: number) {
+  if (name == 1) {
+    return toast('?????')
+  }
+  value5.value = name
+}
+
+function change1(e: number) {
+  value1.value = e
+  console.log('change1', e)
+}
+
+function click1(e: number) {
+  console.log('click1', e)
+}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+		&__item {
+
+			&__title {
+				color: $u-tips-color;
+				background-color: $u-bg-color;
+				padding: 15px 15px 5px 15px;
+				font-size: 15px;
+
+				&__slot-title {
+					color: $u-primary;
+					font-size: 14px;
+				}
+			}
+
+			&__slot-icon {
+				width: 17px;
+				height: 17px;
+			}
+		}
+	}
+</style>

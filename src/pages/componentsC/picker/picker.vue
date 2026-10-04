@@ -1,0 +1,178 @@
+<template>
+	<view class="u-page" ref="page">
+		<up-navbar
+			title="选择器"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-cell-group>
+			<up-cell
+				@click="showPicker(index)"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-picker
+			:show="show1"
+			:columns="columns1"
+			@change="change"
+			@cancel="cancel"
+			@confirm="confirm"
+		></up-picker>
+		<up-picker
+			:show="show2"
+			:columns="columns2"
+			:defaultIndex="[1]"
+			@cancel="cancel"
+			@confirm="confirm"
+			@change="change"
+		></up-picker>
+		<up-picker
+			:show="show3"
+			:columns="columns3"
+			ref="uPicker3"
+			@cancel="cancel"
+			@confirm="confirm"
+			@change="changeHandler1"
+		></up-picker>
+		<up-picker
+			:show="show4"
+			:columns="columns4"
+			@cancel="cancel"
+			@confirm="confirm"
+			:loading="loading"
+			@change="changeHandler2"
+			ref="uPicker4"
+		></up-picker>
+		<up-picker
+			:show="show5"
+			:columns="columns5"
+			title="标题太长就会显示省略号"
+			@cancel="cancel"
+			@confirm="confirm"
+			@change="change"
+		></up-picker>
+		<up-picker
+			:show="show6"
+			:columns="columns6"
+			closeOnClickOverlay
+			@cancel="cancel"
+			@confirm="confirm"
+			@close="close"
+			@change="change"
+		></up-picker>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const currentIndex = ref(0)
+	const loading = ref(false)
+	const uPicker3 = ref<ComponentPublicInstance | null>(null)
+	const uPicker4 = ref<ComponentPublicInstance | null>(null)
+	const columnData = [
+		['深圳', '厦门', '上海', '拉萨'],
+		['得州', '华盛顿', '纽约', '阿拉斯加']
+	]
+	const columns1 = [['中国', '美国', '日本']]
+	const columns2 = [['中国', '美国', '日本']]
+	const columns3 = [
+		['中国', '美国'],
+		['深圳', '厦门', '上海', '拉萨']
+	]
+	const columns4 = [
+		['中国', '美国'],
+		['深圳', '厦门', '上海', '拉萨']
+	]
+	const columns5 = [['中国', '美国', '日本']]
+	const columns6 = [['中国', '美国', '日本']]
+	const show1 = ref(false)
+	const show2 = ref(false)
+	const show3 = ref(false)
+	const show4 = ref(false)
+	const show5 = ref(false)
+	const show6 = ref(false)
+	const list = [
+		{ title: '基础使用', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/2.png' },
+		{ title: '设置默认项', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/5.png' },
+		{ title: '多列联动', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/1.png' },
+		{ title: '加载中状态(切换第一列)', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/3.png' },
+		{ title: '设置标题', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/4.png' },
+		{ title: '允许点击遮罩关闭', iconUrl: 'https://cdn.uviewui.com/uview/demo/picker/6.png' },
+	]
+
+	function change(e: any): void {
+		// console.log('change', e)
+	}
+
+	function changeHandler1(e: UTSJSONObject): void {
+		change(e)
+		const columnIndex = e.getNumber('columnIndex')
+		const index = e.getNumber('index')
+		if (columnIndex == 0 && index != null) {
+			// uPicker3.value?.setColumnValues(1, columnData[index])
+		}
+	}
+
+	function changeHandler2(e: UTSJSONObject): void {
+		change(e)
+		const columnIndex = e.getNumber('columnIndex')
+		const index = e.getNumber('index')
+		if (columnIndex == 0 && index != null) {
+			loading.value = true
+			// sleep(1500).then(() => {
+			// 	uPicker4.value?.setColumnValues(1, columnData[index])
+			loading.value = false
+			// })
+		}
+	}
+
+	function navigateBack(): void {
+		uni.navigateBack()
+	}
+
+	function setShow(index: number, value: boolean): void {
+		if (index == 1) show1.value = value
+		if (index == 2) show2.value = value
+		if (index == 3) show3.value = value
+		if (index == 4) show4.value = value
+		if (index == 5) show5.value = value
+		if (index == 6) show6.value = value
+	}
+
+	function showPicker(index: number): void {
+		currentIndex.value = index + 1
+		setShow(currentIndex.value, true)
+	}
+
+	function close(): void {
+		setShow(currentIndex.value, false)
+	}
+
+	function confirm(e: any): void {
+		setShow(currentIndex.value, false)
+	}
+
+	function cancel(): void {
+		setShow(currentIndex.value, false)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

@@ -1,0 +1,67 @@
+<template>
+  <view class="u-page">
+    <view class="u-page__item">
+      <text class="u-page__item__title" style="margin-top: 0;">基础用法</text>
+      <view class="u-page__item__content">
+        <up-city-locate
+          :currentCity="currentCity"
+          locationType="wgs84"
+          :indexList="indexList"
+          :cityList="cityList"
+          @location-success="locationSuccess"
+          @select-city="selectCity">
+        </up-city-locate>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const currentCity = ref('')
+const indexList = ['热', '全'] as Array<string>
+const cityList = [[{
+  name: '北京',
+  value: 'beijing'
+}, {
+  name: '上海',
+  value: 'shanghai'
+}, {
+  name: '广州',
+  value: 'guangzhou'
+}] as Array<UTSJSONObject>, [{
+  name: '北京',
+  value: 'beijing'
+}, {
+  name: '上海',
+  value: 'shanghai'
+}, {
+  name: '广州',
+  value: 'guangzhou'
+}, {
+  name: '深圳',
+  value: 'shenzhen'
+}, {
+  name: '杭州',
+  value: 'hangzhou'
+}] as Array<UTSJSONObject>] as Array<Array<UTSJSONObject>>
+
+function locationSuccess(_e: UTSJSONObject): void {
+  currentCity.value = '南京'
+}
+
+function selectCity(e: UTSJSONObject): void {
+  const city = e['locationCity']
+  currentCity.value = city == null ? '' : city.toString()
+}
+</script>
+
+<style lang="scss" scoped>
+  .u-page__item {
+      margin-bottom: 15px;
+  }
+  .u-page__item__title {
+      margin-bottom: 10px;
+  }
+</style>

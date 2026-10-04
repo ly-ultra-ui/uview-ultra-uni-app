@@ -1,0 +1,197 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+						text="我用十年青春,赴你最后之约"
+						@click="test">
+					</up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">设置主题</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    text="主色"
+					    type="primary"
+					></up-text>
+				</view>
+				<view class="u-page__text-item">
+					<up-text
+					    type="error"
+					    text="错误"
+					></up-text>
+				</view>
+				<view class="u-page__text-item">
+					<up-text
+					    type="success"
+					    text="成功"
+					></up-text>
+				</view>
+				<view class="u-page__text-item">
+					<up-text
+					    type="warning"
+					    text="警告"
+					></up-text>
+				</view>
+				<view class="u-page__text-item">
+					<up-text
+					    type="info"
+					    text="信息"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">拨打电话</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    mode="phone"
+					    text="15019479320"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">日期格式化</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    mode="date"
+					    text="1612959739"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">姓名脱敏</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    mode="name"
+					    text="张三三"
+						format="encrypt"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">超链接</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    mode="link"
+					    text="Go to uview-plus docs"
+					    href="https://ijry.github.io/uview-plus/"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">显示金额</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__text-item">
+					<up-text
+					    mode="price"
+					    text="728732.32"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">前后图标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view
+				    class="u-page__text-item"
+				    style="margin-right: 50px;"
+				>
+					<up-text
+					    prefixIcon="baidu"
+					    iconStyle="font-size: 19px"
+					    text="百度一下"
+					></up-text>
+				</view>
+				<view class="u-page__text-item">
+					<up-text
+					    suffixIcon="arrow-rightward"
+					    iconStyle="font-size: 18px"
+					    text="查看更多"
+					></up-text>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">超出隐藏</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-text
+				    :lines="2"
+				    text="关于uview-plus的取名来由，首字母u来自于uni-app首字母，uni-app是基于Vue.js，Vue和View(延伸为UI、视图之意)同音，同时view组件uni-app中 最基础，最重要的组件，故取名uview-pls，表达源于uni-app和Vue之意，同时在此也对它们表示感谢。"
+				></up-text>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">小程序开放能力</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-text
+				    text="分享到微信"
+				    openType="share"
+				    type="success"
+					@click="clickHandler"
+				></up-text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	function test() {
+		console.log('test')
+	}
+
+	function clickHandler() {
+		// #ifndef MP-WEIXIN
+		uni.showToast({
+			title: '请在微信小程序内查看效果'
+		})
+		// #endif
+	}
+</script>
+
+<style lang="scss">
+	.u-page__text-item {
+		margin-right: 10px;
+		flex: 1;
+	}
+
+	.u-demo-block__content {
+		@include flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+</style>

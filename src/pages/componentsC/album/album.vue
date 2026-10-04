@@ -1,0 +1,218 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">基础使用</view>
+			<view class="u-demo-block__content">
+				<view class="album">
+					<view class="album__avatar">
+						<image
+						    src="/static/uview/common/logo.png"
+						    mode=""
+						    style="width: 32px;height: 32px;"
+						></image>
+					</view>
+					<view class="album__content">
+						<up-text
+						    text="uview-plus"
+						    type="primary"
+						    bold
+						    size="17"
+						></up-text>
+						<up-text
+						    margin="0 0 8px 0"
+						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+						></up-text>
+						<up-album
+						    :urls="urls1"
+						    keyName="src2"
+						></up-album>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">多图模式</view>
+			<view class="u-demo-block__content">
+				<view class="album">
+					<view class="album__avatar">
+						<image
+						    src="/static/uview/common/logo.png"
+						    mode=""
+						    style="width: 32px;height: 32px;"
+						></image>
+					</view>
+					<view class="album__content">
+						<up-text
+						    text="uview-plus"
+						    type="primary"
+						    bold
+						    size="17"
+						></up-text>
+						<up-text
+						    margin="0 0 8px 0"
+						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+						></up-text>
+						<up-album :urls="urls2"></up-album>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">图文对齐</view>
+			<view class="u-demo-block__content">
+				<view class="album">
+					<view class="album__avatar">
+						<image
+						    src="/static/uview/common/logo.png"
+						    mode=""
+						    style="width: 32px;height: 32px;"
+						></image>
+					</view>
+					<view class="album__content">
+						<up-text
+						    text="uview-plus"
+						    type="primary"
+						    bold
+						    size="17"
+						></up-text>
+						<view :style="{
+							marginBottom: '8px',
+							width: albumWidth + 'px'
+						}">
+							<up-text
+							    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+							    :customStyle="{
+									width: albumWidth + 'px'
+								}"
+							></up-text>
+						</view>
+						<up-album
+						    :urls="urls2"
+						    @albumWidth="getAlbumWidth"
+						    multipleSize="68"
+						></up-album>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">更改裁剪模式</view>
+			<view class="u-demo-block__content">
+				<view class="album">
+					<view class="album__avatar">
+						<image
+						    src="/static/uview/common/logo.png"
+						    mode=""
+						    style="width: 32px;height: 32px;"
+						></image>
+					</view>
+					<view class="album__content">
+						<up-text
+						    text="uview-plus"
+						    type="primary"
+						    bold
+						    size="17"
+						></up-text>
+						<up-text
+						    margin="0 0 8px 0"
+						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+						></up-text>
+						<up-album
+						    :urls="urls3"
+						    rowCount="2"
+						    maxCount="4"
+						    multipleMode="scaleToFill"
+						></up-album>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">更改图片大小</view>
+			<view class="u-demo-block__content">
+				<view class="album">
+					<view class="album__avatar">
+						<image
+						    src="/static/uview/common/logo.png"
+						    mode=""
+						    style="width: 32px;height: 32px;"
+						></image>
+					</view>
+					<view class="album__content">
+						<up-text
+						    text="uview-plus"
+						    type="primary"
+						    bold
+						    size="17"
+						></up-text>
+						<up-text
+						    margin="0 0 8px 0"
+						    text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"
+						></up-text>
+						<up-album
+						    :urls="urls4"
+						    rowCount="2"
+						    maxCount="4"
+						    multipleSize="50"
+						></up-album>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const albumWidth = ref(0)
+	const urls1 = [{
+		src2: 'https://cdn.uviewui.com/uview/album/1.jpg',
+	}]
+	const urls2 = [
+		'https://cdn.uviewui.com/uview/album/1.jpg',
+		'https://cdn.uviewui.com/uview/album/2.jpg',
+		'https://cdn.uviewui.com/uview/album/3.jpg',
+		'https://cdn.uviewui.com/uview/album/4.jpg',
+		'https://cdn.uviewui.com/uview/album/5.jpg',
+		'https://cdn.uviewui.com/uview/album/6.jpg',
+		'https://cdn.uviewui.com/uview/album/7.jpg',
+		'https://cdn.uviewui.com/uview/album/8.jpg',
+		'https://cdn.uviewui.com/uview/album/9.jpg',
+		'https://cdn.uviewui.com/uview/album/10.jpg',
+	]
+	const urls3 = [
+		'https://cdn.uviewui.com/uview/album/5.jpg',
+		'https://cdn.uviewui.com/uview/album/6.jpg',
+		'https://cdn.uviewui.com/uview/album/7.jpg',
+		'https://cdn.uviewui.com/uview/album/8.jpg',
+	]
+	const urls4 = [
+		'https://cdn.uviewui.com/uview/album/7.jpg',
+		'https://cdn.uviewui.com/uview/album/8.jpg',
+		'https://cdn.uviewui.com/uview/album/9.jpg',
+		'https://cdn.uviewui.com/uview/album/10.jpg',
+	]
+
+	function getAlbumWidth(width: number) {
+		albumWidth.value = width
+	}
+</script>
+
+<style lang="scss">
+	.album {
+		@include flex;
+		align-items: flex-start;
+
+		&__avatar {
+			background-color: $u-bg-color;
+			padding: 5px;
+			border-radius: 3px;
+		}
+
+		&__content {
+			margin-left: 10px;
+			flex: 1;
+		}
+	}
+</style>

@@ -1,0 +1,240 @@
+<template>
+	<view class="page">
+		<up-short-video 
+			:tabs-list="tabsList"
+			:video-list="videoList"
+			:current-tab="currentTab"
+			:current-video="currentVideo"
+			@tabChange="onTabChange"
+			@videoChange="onVideoChange"
+			@like="onLike"
+			@comment="onComment"
+			@share="onShare"
+			@collect="onCollect"
+		>
+			<!-- 自定义菜单按钮 -->
+			<template #menu>
+				<view class="custom-menu">
+					<up-icon name="grid" size="22px" color="#ddd"></up-icon>
+				</view>
+			</template>
+			
+			<!-- 自定义搜索按钮 -->
+			<template #search>
+				<view class="custom-search">
+					<up-icon name="search" size="22px" color="#ddd"></up-icon>
+				</view>
+			</template>
+			
+			<template #tabbar> 
+				<up-tabbar
+                    :fixed="true"
+                    :placeholder="true"
+                    :safeAreaInsetBottom="true"
+                    borderColor="rgba(255,255,255,0.25) !important"
+                    backgroundColor="rgba(255,255,255,0.05)"
+                >
+                    <up-tabbar-item
+                        @click="goNext"
+                        text="首页"
+                        icon="home"
+                    >
+                    </up-tabbar-item>
+                    <up-tabbar-item
+                        text="放映厅"
+                        icon="photo"
+                    ></up-tabbar-item>
+                    <up-tabbar-item
+                        text="直播"
+                        icon="play-right"
+                    ></up-tabbar-item>
+                    <up-tabbar-item
+                        text="我的"
+                        icon="account"
+                    ></up-tabbar-item>
+                </up-tabbar>
+			</template>
+		</up-short-video>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const currentTab = ref(0)
+const currentVideo = ref(0)
+const tabsList = [
+	{ name: '推荐' },
+	{ name: '关注' },
+	{ name: '朋友' },
+	{ name: '本地' }
+] as Array<UTSJSONObject>
+const videoList = ref([
+	{
+		videoUrl: 'https://uview-plus.jiangruyi.com/big/rjtsdl.MP4',
+		progress: 0,
+		bgColor: '#000',
+		author: {
+			avatar: '/static/avatar1.jpg',
+			name: '创作者1',
+			desc: '这是一段视频描述'
+		},
+		isLiked: false,
+		likeCount: 128,
+		commentCount: 25,
+		shareCount: 12,
+		collectCount: 8,
+		isCollected: false
+	},
+	{
+		videoUrl: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
+		progress: 0,
+		bgColor: '#000',
+		author: {
+			avatar: '/static/avatar2.jpg',
+			name: '创作者2',
+			desc: '记录美好生活'
+		},
+		isLiked: true,
+		likeCount: 863,
+		commentCount: 96,
+		shareCount: 32,
+		collectCount: 45,
+		isCollected: true
+	},
+	{
+		videoUrl: 'https://uview-plus.jiangruyi.com/big/shanghai.mp4',
+		progress: 0,
+		bgColor: '#000',
+		author: {
+			avatar: '/static/avatar3.jpg',
+			name: '创作者3',
+			desc: '生活需要仪式感'
+		},
+		isLiked: false,
+		likeCount: 562,
+		commentCount: 47,
+		shareCount: 21,
+		collectCount: 19,
+		isCollected: false
+	}
+] as Array<UTSJSONObject>)
+
+function onTabChange(index: number): void {
+	currentTab.value = index
+}
+
+function onVideoChange(index: number): void {
+	currentVideo.value = index
+}
+
+function getEventIndex(e: UTSJSONObject): number {
+	const index = e['index']
+	if (typeof index === 'number') {
+		return index
+	}
+	if (index == null) {
+		return 0
+	}
+	const parsed = parseInt(index.toString())
+	return isNaN(parsed) ? 0 : parsed
+}
+
+function getListItem(index: number): UTSJSONObject | null {
+	if (index < 0 || index >= videoList.value.length) {
+		return null
+	}
+	return videoList.value[index] as UTSJSONObject
+}
+
+function getBooleanValue(value: any | null): boolean {
+	if (typeof value === 'boolean') {
+		return value
+	}
+	return value != null && value.toString() == 'true'
+}
+
+function getNumberValue(value: any | null): number {
+	if (typeof value === 'number') {
+		return value
+	}
+	if (value == null) {
+		return 0
+	}
+	const parsed = parseFloat(value.toString())
+	return isNaN(parsed) ? 0 : parsed
+}
+
+function onLike(e: UTSJSONObject): void {
+	const index = getEventIndex(e)
+	const item = getListItem(index)
+	if (item == null) return
+	const liked = !getBooleanValue(item['isLiked'])
+	item['isLiked'] = liked
+	item['likeCount'] = getNumberValue(item['likeCount']) + (liked ? 1 : -1)
+}
+
+function onComment(_e: UTSJSONObject): void {
+	uni.showToast({
+		title: '评论功能',
+		icon: 'none'
+	})
+}
+
+function onShare(_e: UTSJSONObject): void {
+	uni.showToast({
+		title: '分享功能',
+		icon: 'none'
+	})
+}
+
+function onCollect(e: UTSJSONObject): void {
+	const index = getEventIndex(e)
+	const item = getListItem(index)
+	if (item == null) return
+	const collected = !getBooleanValue(item['isCollected'])
+	item['isCollected'] = collected
+	item['collectCount'] = getNumberValue(item['collectCount']) + (collected ? 1 : -1)
+}
+
+function goNext(): void {
+	uni.switchTab({
+		url: '/pages/example/components'
+	})
+}
+</script>
+
+<style scoped>
+	.page {
+		width: 100%;
+		height: 100%;
+		background-color: #000;
+	}
+	
+	.custom-menu, .custom-search {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.custom-actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.action-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+	
+	.action-text {
+		color: #fff;
+		font-size: 12px;
+		margin-top: 5px;
+	}
+</style>

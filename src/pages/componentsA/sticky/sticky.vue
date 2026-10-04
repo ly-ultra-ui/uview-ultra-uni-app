@@ -1,0 +1,53 @@
+<template>
+	<scroll-view style="flex:1" @scroll="onScroll">
+	<view class="u-page">
+		<!-- <up-navbar
+			title="吸顶"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar> -->
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础使用</text>
+			</view>
+			<up-text
+				type="content"
+				text="滚动页面,即可看到下方的按钮会吸顶。"
+			></up-text>
+		</view>
+		<up-sticky ref="stickyRef" :offsetTop="0">
+			<up-button
+				text="吸顶按钮"
+				type="success"
+			></up-button>
+		</up-sticky>
+		<up-gap
+			bgColor="#fff"
+			height="1500px"
+		></up-gap>
+		<up-divider text="已到底部"></up-divider>
+	</view>
+	</scroll-view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const stickyRef = ref<ComponentPublicInstance | null>(null)
+
+	function onScroll(e: UniScrollEvent) {
+		stickyRef.value?.setFixed(e.detail.scrollTop)
+	}
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		
+	}
+</style>

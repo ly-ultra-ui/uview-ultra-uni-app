@@ -1,0 +1,91 @@
+<template>
+	<!-- #ifdef APP -->
+	<!-- APP 端页面根节点不滚动，需显式包一层 scroll-view。
+	     大标题在容器内部，随容器滚动被带走，滚动量由 @scroll 提供。 -->
+	<scroll-view style="flex:1" @scroll="onScroll">
+	<!-- #endif -->
+	<view class="ios-demo">
+		<up-navbar
+			mode="ios"
+			title="设置"
+			:scrollTop="scrollTop"
+			:autoBack="true"
+			rightIcon="search"
+			@rightClick="rightClick"
+		></up-navbar>
+		<view class="ios-demo__body">
+			<text class="ios-demo__tip">向下滚动，观察大标题被压缩进导航栏，标题过渡为居中形态并由下方浮现。</text>
+			<view
+				class="ios-demo__cell"
+				v-for="(item, index) in cells"
+				:key="index"
+			>
+				<text class="ios-demo__cell__text">{{ item }}</text>
+			</view>
+		</view>
+	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script setup lang="ts">
+import { onPageScroll } from '@dcloudio/uni-app'
+
+	import { ref } from 'vue'
+
+	const scrollTop = ref(0)
+
+	const cells = ref<string[]>([])
+	for (let i = 1; i <= 30; i++) {
+		cells.value.push('列表项 ' + i.toString())
+	}
+
+	const rightClick = () => {
+		console.log('rightClick')
+	}
+
+	// APP 端滚动发生在 scroll-view 内，页面级 onPageScroll 不会触发，
+	// 因此这里从容器的 scroll 事件取滚动量。
+	// #ifdef APP
+	const onScroll = (e: UniScrollEvent) => {
+		scrollTop.value = e.detail.scrollTop
+	}
+	// #endif
+
+	// 非 APP 端由页面自身滚动，走页面级生命周期。
+	// #ifndef APP
+	onPageScroll((e: OnPageScrollOptions) => {
+		scrollTop.value = e.scrollTop
+	})
+	// #endif
+</script>
+
+<style lang="scss">
+	.ios-demo {
+		background-color: #f3f4f6;
+	}
+
+	.ios-demo__body {
+		padding: 0 15px 40px 15px;
+	}
+
+	.ios-demo__tip {
+		font-size: 13px;
+		color: #909193;
+		padding-top: 12px;
+		padding-bottom: 16px;
+	}
+
+	.ios-demo__cell {
+		background-color: #ffffff;
+		border-radius: 8px;
+		margin-bottom: 8px;
+		padding: 14px 16px;
+	}
+
+	.ios-demo__cell__text {
+		font-size: 15px;
+		color: #303133;
+	}
+</style>

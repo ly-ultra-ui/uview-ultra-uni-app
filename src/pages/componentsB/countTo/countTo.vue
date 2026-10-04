@@ -1,0 +1,182 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to
+						:endVal="value"
+						@end="end"
+					></up-count-to>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">倒计数</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to :startVal="startVal1"></up-count-to>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">显示小数位</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to
+						:startVal="startVal2"
+						:endVal="endVal"
+						:decimals="decimals"
+					></up-count-to>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">千分位分隔符</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to
+						:startVal="startVal3"
+						:endVal="endVal2"
+						separator=","
+						:decimals="decimals"
+					></up-count-to>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义控制</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to
+						ref="uCountToRef"
+						:endVal="endVal3"
+						:autoplay="autoplay"
+					></up-count-to>
+				</view>
+			</view>
+			<view class="u-demo-block__content">
+				<view
+					class=""
+					style="flex: 1;"
+				>
+					<up-grid
+						border
+						align="center"
+						customStyle="margin-top: 20px;margin-bottom: 20"
+					>
+						<up-grid-item @click="start">
+							<view class="u-grid-slot">
+								<view class="u-grid-slot__circle">
+									<text class="u-grid-slot__circle__text">开始</text>
+								</view>
+							</view>
+						</up-grid-item>
+						<up-grid-item @click="paused">
+							<view class="u-grid-slot">
+								<view class="u-grid-slot__circle">
+									<text class="u-grid-slot__circle__text">暂停</text>
+								</view>
+							</view>
+						</up-grid-item>
+						<up-grid-item @click="resume">
+							<view class="u-grid-slot">
+								<view class="u-grid-slot__circle">
+									<text class="u-grid-slot__circle__text">继续</text>
+								</view>
+							</view>
+						</up-grid-item>
+					</up-grid>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-count-to
+						:endVal="value"
+						color="#909399"
+						:fontSize="fontSize"
+						:bold="true"
+					></up-count-to>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const uCountToRef = ref<ComponentPublicInstance | null>(null)
+	const value = ref(3000)
+	const startVal1 = ref(300)
+	const startVal2 = ref(100.00)
+	const endVal = ref(10.55)
+	const decimals = ref(2)
+	const startVal3 = ref(2000)
+	const endVal2 = ref(1542)
+	const endVal3 = ref(3000)
+	const autoplay = ref(false)
+	const color = ref('#FF0000')
+	const fontSize = ref(40)
+
+	function start() {
+		uCountToRef.value?.start()
+	}
+
+	function paused() {
+		uCountToRef.value?.stop()
+	}
+
+	function resume() {
+		uCountToRef.value?.resume()
+	}
+
+	function end() {
+		console.log('end')
+	}
+</script>
+
+<style lang="scss">
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.u-grid-slot {
+		border-radius: 100px;
+		border-color: #dbfbdb;
+		border-width: 2px;
+		@include flex;
+
+		&__circle {
+			width: 50px;
+			height: 50px;
+			background-color: #dbfbdb;
+			border-radius: 100px;
+			justify-content: center;
+			align-items: center;
+			margin: 2px;
+
+			&__text {
+				color: rgb(25, 190, 107);
+				font-size: 13px;
+			}
+		}
+	}
+</style>

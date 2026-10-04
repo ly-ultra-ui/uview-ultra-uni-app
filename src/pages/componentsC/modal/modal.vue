@@ -1,0 +1,178 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="模态框"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-gap
+			height="20"
+			bgColor="#fff"
+		></up-gap>
+		<up-cell-group>
+			<up-cell
+				@click="showModal(index)"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-modal
+			:content="content"
+			title="标题"
+			:show="show1"
+			@confirm="() => {show1 = false}"
+		></up-modal>
+		<up-modal
+			:content="content"
+			:show="show2"
+			@confirm="() => {show2 = false}"
+		></up-modal>
+		<up-modal
+			:content="content"
+			:show="show3"
+			showCancelButton
+			closeOnClickOverlay
+			@confirm="confirm"
+			@cancel="cancel"
+			@close="close"
+		></up-modal>
+		<up-modal
+			:content="content"
+			:show="show4"
+			showCancelButton
+			asyncClose
+			@confirm="confirm4"
+			@cancel="() => {show4 = false}"
+		></up-modal>
+		<up-modal
+			:content="content"
+			:show="show5"
+			showCancelButton
+			buttonReverse
+			@confirm="() => {show5 = false}"
+			@cancel="() => {show5 = false}"
+		></up-modal>
+		<up-modal
+			:content="content"
+			title="标题"
+			:show="show6"
+			closeOnClickOverlay
+			@confirm="() => {show6 = false}"
+			@close="() => {show6 = false}"
+		></up-modal>
+		<up-modal
+			title="利剑出鞘,一统江湖"
+			:show="show7"
+			closeOnClickOverlay
+			@confirm="() => {show7 = false}"
+		>
+			<image
+				style="width: 80px;height: 80px;"
+				src="/static/uview/common/logo.png"
+			></image>
+		</up-modal>
+		<up-modal
+			title="标题"
+			:show="show8"
+			:content="content"
+			closeOnClickOverlay
+			showCancelButton
+		>
+			<template #confirmButton>
+				<up-button
+					text="确定"
+					type="success"
+					shape="circle"
+					@click="show8 = false"
+				></up-button>
+			</template>
+		</up-modal>
+		<up-modal
+			:content="content"
+			title="标题"
+			:show="show9"
+			:zoom="false"
+			@confirm="() => {show9 = false}"
+		></up-modal>
+	</view></template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const content = '模态框，常用于消息提示、消息确认、在当前页面内完成特定的交互操作'
+	const show1 = ref(false)
+	const show2 = ref(false)
+	const show3 = ref(false)
+	const show4 = ref(false)
+	const show5 = ref(false)
+	const show6 = ref(false)
+	const show7 = ref(false)
+	const show8 = ref(false)
+	const show9 = ref(false)
+	const list = [
+		{ title: '基础使用', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/4.png' },
+		{ title: '无标题', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/5.png' },
+		{ title: '带取消按钮', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/2.png' },
+		{ title: '异步关闭', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/6.png' },
+		{ title: '对调取消和确认按钮', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/3.png' },
+		{ title: '允许点击遮罩关闭', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/7.png' },
+		{ title: '传入slot', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/1.png' },
+		{ title: '自定义按钮', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/8.png' },
+		{ title: '淡入淡出动画', iconUrl: 'https://cdn.uviewui.com/uview/demo/modal/9.png' }
+	]
+
+	function showModal(index: number) {
+		if (index == 0) show1.value = true
+		if (index == 1) show2.value = true
+		if (index == 2) show3.value = true
+		if (index == 3) show4.value = true
+		if (index == 4) show5.value = true
+		if (index == 5) show6.value = true
+		if (index == 6) show7.value = true
+		if (index == 7) show8.value = true
+		if (index == 8) show9.value = true
+	}
+
+	function navigateBack() {
+		uni.navigateBack()
+	}
+
+	function confirm4() {
+		setTimeout(() => {
+			show4.value = false
+		}, 2000)
+	}
+
+	function confirm() {
+		show3.value = false
+		console.log('confirm')
+	}
+
+	function cancel() {
+		show3.value = false
+		console.log('cancel')
+	}
+
+	function close() {
+		show3.value = false
+		console.log('close')
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

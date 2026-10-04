@@ -1,0 +1,173 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__item">
+			<text class="u-page__item__title">基础示例</text>
+			<view class="u-page__item__content">
+				<up-button type="primary" shape="circle" text="生成海报" @click="generatePoster"></up-button>
+				<view v-if="posterImageUrl.length > 0" class="poster-preview">
+					<image :src="posterImageUrl" class="poster-image" mode="widthFix"></image>
+				</view>
+				<up-poster
+					ref="poster"
+					:json="posterConfig"
+					@export="onPosterExport"
+					@error="onPosterError"
+				></up-poster>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+function createPosterConfig(): UTSJSONObject {
+	return {
+		css: {
+			width: '750rpx',
+			height: '1114rpx',
+			background: 'linear-gradient(135deg,#fce38a,#f38181)'
+		},
+		views: [
+			{
+				type: 'view',
+				css: {
+					position: 'absolute',
+					left: '40rpx',
+					top: '144rpx',
+					background: '#ffffff',
+					radius: '16rpx',
+					width: '670rpx',
+					height: '930rpx'
+				}
+			},
+			{
+				type: 'text',
+				text: '为您挑选了一个好物',
+				css: {
+					position: 'absolute',
+					color: '#666666',
+					left: '144rpx',
+					top: '90rpx',
+					fontSize: '30rpx'
+				}
+			},
+			{
+				type: 'image',
+				src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png',
+				css: {
+					position: 'absolute',
+					left: '72rpx',
+					top: '176rpx',
+					width: '606rpx',
+					height: '606rpx',
+					radius: '12rpx'
+				}
+			},
+			{
+				type: 'text',
+				text: '￥299',
+				css: {
+					position: 'absolute',
+					color: '#ff3b30',
+					left: '66rpx',
+					top: '840rpx',
+					fontSize: '56rpx',
+					fontWeight: 'bold'
+				}
+			},
+			{
+				type: 'text',
+				text: '精美陶瓷茶具套装，高端大气上档次，送礼自用两相宜',
+				css: {
+					position: 'absolute',
+					lineClamp: 2,
+					width: '396rpx',
+					color: '#333333',
+					left: '72rpx',
+					top: '930rpx',
+					fontSize: '36rpx',
+					lineHeight: '50rpx'
+				}
+			},
+			{
+				type: 'qrcode',
+				text: 'https://example.com/product/123',
+				css: {
+					position: 'absolute',
+					left: '500rpx',
+					top: '864rpx',
+					width: '178rpx',
+					height: '178rpx'
+				}
+			}
+		] as Array<UTSJSONObject>
+	} as UTSJSONObject
+}
+
+const posterConfig = createPosterConfig()
+const posterImageUrl = ref('')
+const poster = ref<ComponentPublicInstance | null>(null)
+
+function onPosterError(error: any | null): void {
+	console.error('海报生成失败:', error)
+	uni.hideLoading()
+	uni.showToast({
+		title: '海报生成失败',
+		icon: 'none'
+	})
+}
+
+function generatePoster(): void {
+	uni.showLoading({
+		title: '海报生成中...'
+	})
+	const posterInstance = poster.value
+	if (posterInstance == null) {
+		uni.hideLoading()
+		uni.showToast({
+			title: '海报组件未就绪',
+			icon: 'none'
+		})
+		return
+	}
+	const result = posterInstance.exportImage()
+	if (result == null) {
+		uni.hideLoading()
+		uni.showToast({
+			title: '海报生成失败',
+			icon: 'none'
+		})
+		return
+	}
+	;(result as Promise<UTSJSONObject>).then((res: UTSJSONObject) => {
+		posterImageUrl.value = res['path'] == null ? '' : res['path'].toString()
+		uni.hideLoading()
+		uni.showToast({
+			title: '海报生成成功',
+			icon: 'success'
+		})
+	}).catch((error: any | null) => {
+		onPosterError(error)
+	})
+}
+
+function onPosterExport(result: UTSJSONObject): void {
+	posterImageUrl.value = result['path'] == null ? '' : result['path'].toString()
+}
+</script>
+
+<style lang="scss" scoped>
+	.poster-preview {
+		width: 100%;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		border-radius: 8px;
+		overflow: hidden;
+		background-color: #ffffff;
+	}
+
+	.poster-image {
+		width: 100%;
+	}
+</style>

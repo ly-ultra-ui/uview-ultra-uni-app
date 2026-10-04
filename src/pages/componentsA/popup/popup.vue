@@ -1,0 +1,194 @@
+<template>
+	<!-- #ifdef APP -->
+	<scroll-view>
+	<!-- #endif -->
+	<view>
+		<up-navbar
+			title="弹窗"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-gap
+			height="20"
+			bgColor="#fff"
+		></up-gap>
+		<up-cell-group>
+			<up-cell
+				:titleStyle="{fontWeight: 500}"
+				@click="openPopup(item['popupData'])"
+				:title="item['title']"
+				v-for="(item, index) in list"
+				:key="index"
+				isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-popup
+			:safeAreaInsetBottom="true"
+			:safeAreaInsetTop="true"
+			:mode="popupData?.['mode']"
+			:show="show"
+			:round="popupData?.['round']"
+			:overlay="popupData?.['overlay']"
+			:borderRadius="popupData?.['borderRadius']"
+			:closeable="popupData?.['closeable']"
+			:closeOnClickOverlay="popupData?.['closeOnClickOverlay']"
+			@close="close"
+			@open="open"
+		>
+			<view
+				class="u-popup-slot"
+				:style="{
+					width: ['bottom', 'top'].includes(getMode(popupData)) ? '750rpx' : '200px',
+					marginTop: ['left', 'right'].includes(getMode(popupData)) ? '480rpx' : '0',
+				}"
+			>
+				<up-tag
+					type="success"
+					text="点我关闭"
+					customStyle="width: 200rpx"
+					@click="close"
+				></up-tag>
+			</view>
+		</up-popup>
+	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const show = ref(false)
+	const popupData = ref({
+		overlay: true,
+		mode: 'bottom',
+		borderRadius: '',
+		closeable: true,
+		closeOnClickOverlay: true
+	} as UTSJSONObject | null)
+	const list = [
+		{
+			popupData: {
+				overlay: true,
+				mode: 'top',
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '顶部弹出',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeTop.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'right',
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '右侧弹出',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeRight.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'bottom',
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '底部弹出',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeBottom.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'left',
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '左侧弹出',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeLeft.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'center',
+				round: 10,
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '居中弹出',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/modeCenter.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'bottom',
+				round: 10,
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '显示圆角',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showRadis.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'bottom',
+				closeable: false,
+				closeOnClickOverlay: false
+			} as UTSJSONObject,
+			title: '禁止点击遮罩关闭',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/noClose.png'
+		},
+		{
+			popupData: {
+				overlay: true,
+				mode: 'bottom',
+				closeable: true,
+				closeOnClickOverlay: true
+			} as UTSJSONObject,
+			title: '显示关闭按钮',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/popup/showCloseBtn.png'
+		}
+	]
+
+	function openPopup(data?: UTSJSONObject): void {
+		popupData.value = data as UTSJSONObject
+		// sleep().then(() => {
+		show.value = !show.value
+		// })
+	}
+
+	function navigateBack(): void {
+		uni.navigateBack()
+	}
+
+	function getMode(data?: UTSJSONObject | null): string {
+		if (data == null) return ''
+		const mode = data.getString('mode')
+		return mode == null ? '' : mode
+	}
+
+	function open(): void {
+		// console.log('open')
+	}
+
+	function close(): void {
+		show.value = false
+		console.log('close')
+	}
+</script>
+
+<style lang="scss">
+	.u-popup-slot {
+		width: 200px;
+		height: 150px;
+		@include flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

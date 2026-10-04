@@ -1,0 +1,43 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__item">
+			<text class="u-page__item__title">盒子模式</text>
+			<view class="u-page__item__content">
+				<up-message-input
+					v-model="boxValue"
+					:maxlength="4"
+					mode="box"
+					@change="onChange"
+					@finish="onFinish"
+				></up-message-input>
+			</view>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">底线模式</text>
+			<view class="u-page__item__content">
+				<up-message-input
+					v-model="lineValue"
+					:maxlength="6"
+					mode="bottomLine"
+					:dot-fill="true"
+					@finish="onFinish"
+				></up-message-input>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const boxValue = ref('')
+const lineValue = ref('')
+
+function onChange(value: string): void {
+	console.log('message input change:', value)
+}
+
+function onFinish(value: string): void {
+	console.log('message input finish:', value)
+}
+</script>

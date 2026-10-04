@@ -1,0 +1,121 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="加载页"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-gap
+		    bgColor="#fff"
+		    height="20"
+		></up-gap>
+		<up-cell-group>
+			<up-cell
+			    :titleStyle="{fontWeight: 500}"
+			    @click="openLoadingPage(index)"
+			    :title="item['title']"
+			    v-for="(item, index) in list"
+			    :key="index"
+			    isLink
+			>
+				<template #icon>
+					<image
+						class="u-cell-icon"
+						:src="item['iconUrl']"
+						mode="widthFix"
+					></image>
+				</template>
+			</up-cell>
+		</up-cell-group>
+		<up-loading-page
+		    :loadingText="loadingPageData['loadingText']"
+		    :image="loadingPageData['image']"
+			:iconSize="loadingPageData['iconSize']"
+		    :loadingMode="loadingPageData['loadingMode']"
+		    :bgColor="loadingPageData['bgColor']"
+		    :loading="loading"
+		    :color="loadingPageData['color']"
+		    :loadingColor="loadingPageData['loadingColor']"
+		>
+		</up-loading-page>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const loading = ref(false)
+	const loadingPageData = ref({
+		loadingText: '',
+		image: '',
+		loadingMode: '',
+		bgColor: '#ffffff',
+		iconSize: 28
+	} as UTSJSONObject)
+	const list = [{
+			title: '自定义提示内容',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/loading-page/promptContent.png',
+		},
+		{
+			title: '自定义图片',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/loading-page/customPicture.png',
+		},
+		{
+			title: '自定义加载动画模式',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/loading-page/customMode.png',
+		},
+		{
+			title: '自定义背景色',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/loading-page/customBgColor.png',
+		},
+	]
+
+	function navigateBack(): void {
+		uni.navigateBack()
+	}
+
+	function openLoadingPage(indexNum: number): void {
+		loadingPageData.value = {
+			loadingText: '',
+			image: '',
+			loadingMode: '',
+			bgColor: '#ffffff',
+			iconSize: 28
+		} as UTSJSONObject
+		if (indexNum == 0) {
+			loadingPageData.value['loadingMode'] = 'semicircle'
+			loadingPageData.value['loadingText'] = "Hello uView"
+			loadingPageData.value['color'] = '#C8C8C8'
+			loadingPageData.value['loadingColor'] = '#C8C8C8'
+		} else if (indexNum == 1) {
+			loadingPageData.value['image'] = "/static/uview/common/logo.png"
+			loadingPageData.value['loadingText'] = "uView UI"
+			loadingPageData.value['iconSize'] = 40
+			loadingPageData.value['color'] = '#C8C8C8'
+			loadingPageData.value['loadingColor'] = '#C8C8C8'
+		} else if (indexNum == 2) {
+			loadingPageData.value['loadingMode'] = 'circle'
+			loadingPageData.value['loadingText'] = "uView UI"
+			loadingPageData.value['color'] = '#C8C8C8'
+			loadingPageData.value['loadingColor'] = '#C8C8C8'
+		} else if (indexNum == 3) {
+			loadingPageData.value['loadingMode'] = 'spinner'
+			loadingPageData.value['bgColor'] = 'rgba(0, 0, 0, 0.3)'
+			loadingPageData.value['loadingText'] = "uview-plus"
+			loadingPageData.value['color'] = '#eee'
+			loadingPageData.value['loadingColor'] = '#ddd'
+		}
+		loading.value = true
+		setTimeout(() => {
+			loading.value = false
+		}, 2000)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+</style>

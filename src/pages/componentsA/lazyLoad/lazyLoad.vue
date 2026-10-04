@@ -1,0 +1,140 @@
+<template>
+    <view class="wrap">
+        <view class="item-warp">
+            <view class="item" v-for="(item, index) in list" :key="index">
+                <up-lazy-load threshold="-450" height="100px" img-mode="aspectFill" border-radius="10" :image="item.src"
+                    :index="index" @statusChange="statusChange" @clickImg="clickImg"></up-lazy-load>
+            </view>
+        </view>
+        <up-loadmore :status="status" @loadmore="getData"></up-loadmore>
+    </view>
+</template>
+
+<script setup lang="ts">
+import { onLoad, onReachBottom } from '@dcloudio/uni-app'
+
+import { ref } from 'vue'
+import { random } from '@/uni_modules/uview-ultra/libs/function/index';
+
+type LazyLoadItem = {
+  src: string
+}
+
+function createLazyLoadData(): LazyLoadItem[] {
+  return [
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'error.jpg' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'error.jpg' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.pngg' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'error.jpg' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'error.jpg' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper3.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper1.png' },
+    { src: 'https://uview-plus.jiangruyi.com/uview/swiper/swiper2.png' },
+    { src: 'error.jpg' }
+  ] as LazyLoadItem[]
+}
+
+const LAZY_LOAD_DATA = createLazyLoadData()
+
+const list = ref([] as LazyLoadItem[])
+const status = ref('loadmore')
+
+function getData() {
+  let index = 0
+  status.value = 'loading'
+  setTimeout(() => {
+    for (let i = 0; i < 10; i++) {
+      index = random(0, LAZY_LOAD_DATA.length - 1)
+      list.value.push({ src: LAZY_LOAD_DATA[index].src } as LazyLoadItem)
+    }
+    status.value = 'loadmore'
+  }, 1500)
+}
+
+onLoad((_options: OnLoadOptions) => {
+  getData()
+})
+
+onReachBottom(() => {
+  getData()
+})
+
+function statusChange(status: string) {
+}
+
+function clickImg(img: string) {
+}
+</script>
+
+<style lang="scss" scoped>
+    .wrap {
+        padding: 30rpx;
+        display: flex;
+		flex-direction: column;
+    }
+
+    .item-warp {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .item-warp .item {
+        width: 700rpx;
+        height: 200rpx;
+        margin-bottom: 20rpx;
+        border-radius: 10rpx;
+        overflow: hidden;
+    }
+</style>

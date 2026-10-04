@@ -1,0 +1,168 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">直角边形状</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="1500"
+						shape="horn"
+					></up-badge>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">徽标数显示方式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="5132"
+						numberType="ellipsis"
+					></up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="1011"
+						numberType="overflow"
+					></up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="1500"
+						numberType="limit"
+					></up-badge>
+				</view>
+
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="45187"
+						numberType="limit"
+					></up-badge>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">显示圆点</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="1011"
+						numberType="overflow"
+						isDot
+					>
+					</up-badge>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义主题</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="9"
+						type="error"
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="9"
+						type="warning"
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="9"
+						type="success"
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="9"
+						type="primary"
+					>
+					</up-badge>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">反转色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="9"
+						type="error"
+						inverted
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="1532"
+						inverted
+						type="warning"
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="12"
+						inverted
+						type="success"
+					>
+					</up-badge>
+				</view>
+				<view class="u-page__tag-item">
+					<up-badge
+						:value="999"
+						inverted
+						type="primary"
+					>
+					</up-badge>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+</script>
+
+<style lang="scss">
+	.box {
+		justify-content: space-between;
+	}
+
+	.u-page__tag-item {
+		margin-right: 40px;
+		margin-top: 10px;
+	}
+
+	.badge-box {
+		width: 45px;
+		height: 45px;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		border-bottom-left-radius: 3px;
+		border-bottom-right-radius: 3px;
+		background-color: #E6E6E6;
+	}
+
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+</style>

@@ -1,0 +1,778 @@
+{
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationBarTitleText": "uview-ultra · Vue3 冒烟"
+            }
+        },
+        {
+            "path": "pages/componentsA/test/test",
+            "style": {
+                "navigationBarTitleText": "test"
+            }
+        },
+        {
+            "path": "pages/componentsB/parse/jump",
+            "style": {
+                "navigationBarTitleText": "jump"
+            }
+        },
+        {
+            "path": "pages/componentsC/tooltip/tooltip",
+            "style": {
+                "navigationBarTitleText": "工具提示"
+            }
+        },
+        {
+            "path": "pages/componentsD/qrcode/qrcode",
+            "style": {
+                "navigationBarTitleText": "Qrcode二维码"
+            }
+        },
+        {
+            "path": "pages/template/address/addSite",
+            "style": {
+                "navigationBarTitleText": "addSite"
+            }
+        },
+        {
+            "path": "pages/template/address/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/citySelect/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/citySelect/u-city-select",
+            "style": {
+                "navigationBarTitleText": "u-city-select"
+            }
+        },
+        {
+            "path": "pages/template/comment/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/comment/reply",
+            "style": {
+                "navigationBarTitleText": "reply"
+            }
+        },
+        {
+            "path": "pages/template/coupon/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/keyboardPay/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/login/code",
+            "style": {
+                "navigationBarTitleText": "code"
+            }
+        },
+        {
+            "path": "pages/template/login/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/mallMenu/index1",
+            "style": {
+                "navigationBarTitleText": "index1"
+            }
+        },
+        {
+            "path": "pages/template/mallMenu/index2",
+            "style": {
+                "navigationBarTitleText": "index2"
+            }
+        },
+        {
+            "path": "pages/template/order/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/submitBar/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/template/wxCenter/index",
+            "style": {
+                "navigationBarTitleText": "index"
+            }
+        },
+        {
+            "path": "pages/componentsA/backtop/backtop",
+            "style": {
+                "navigationBarTitleText": "返回顶部"
+            }
+        },
+        {
+            "path": "pages/componentsA/button/button",
+            "style": {
+                "navigationBarTitleText": "按钮"
+            }
+        },
+        {
+            "path": "pages/componentsA/cell/cell",
+            "style": {
+                "navigationBarTitleText": "单元格"
+            }
+        },
+        {
+            "path": "pages/componentsA/checkbox/checkbox",
+            "style": {
+                "navigationBarTitleText": "复选框"
+            }
+        },
+        {
+            "path": "pages/componentsA/divider/divider",
+            "style": {
+                "navigationBarTitleText": "分割线"
+            }
+        },
+        {
+            "path": "pages/componentsA/empty/empty",
+            "style": {
+                "navigationBarTitleText": "分割线"
+            }
+        },
+        {
+            "path": "pages/componentsA/gap/gap",
+            "style": {
+                "navigationBarTitleText": "间隔槽"
+            }
+        },
+        {
+            "path": "pages/componentsA/grid/grid",
+            "style": {
+                "navigationBarTitleText": "宫格"
+            }
+        },
+        {
+            "path": "pages/componentsA/icon/icon",
+            "style": {
+                "navigationBarTitleText": "图标"
+            }
+        },
+        {
+            "path": "pages/componentsA/image/image",
+            "style": {
+                "navigationBarTitleText": "图片"
+            }
+        },
+        {
+            "path": "pages/componentsA/lazyLoad/lazyLoad",
+            "style": {
+                "navigationBarTitleText": "图片懒加载"
+            }
+        },
+        {
+            "path": "pages/componentsA/line/line",
+            "style": {
+                "navigationBarTitleText": "线条"
+            }
+        },
+        {
+            "path": "pages/componentsA/link/link",
+            "style": {
+                "navigationBarTitleText": "超链接"
+            }
+        },
+        {
+            "path": "pages/componentsA/loading-icon/loading-icon",
+            "style": {
+                "navigationBarTitleText": "加载中图标"
+            }
+        },
+        {
+            "path": "pages/componentsA/loading-page/loading-page",
+            "style": {
+                "navigationBarTitleText": "加载页"
+            }
+        },
+        {
+            "path": "pages/componentsA/overlay/overlay",
+            "style": {
+                "navigationBarTitleText": "遮罩层"
+            }
+        },
+        {
+            "path": "pages/componentsA/popup/popup",
+            "style": {
+                "navigationBarTitleText": "弹窗"
+            }
+        },
+        {
+            "path": "pages/componentsA/radio/radio",
+            "style": {
+                "navigationBarTitleText": "单选框"
+            }
+        },
+        {
+            "path": "pages/componentsA/rate/rate",
+            "style": {
+                "navigationBarTitleText": "评分"
+            }
+        },
+        {
+            "path": "pages/componentsA/sticky/sticky",
+            "style": {
+                "navigationBarTitleText": "sticky"
+            }
+        },
+        {
+            "path": "pages/componentsA/swipeAction/swipeAction",
+            "style": {
+                "navigationBarTitleText": "滑动操作"
+            }
+        },
+        {
+            "path": "pages/componentsA/transition/transition",
+            "style": {
+                "navigationBarTitleText": "过渡动画"
+            }
+        },
+        {
+            "path": "pages/componentsB/actionSheet/actionSheet",
+            "style": {
+                "navigationBarTitleText": "上拉菜单"
+            }
+        },
+        {
+            "path": "pages/componentsB/alert/alert",
+            "style": {
+                "navigationBarTitleText": "警告"
+            }
+        },
+        {
+            "path": "pages/componentsB/badge/badge",
+            "style": {
+                "navigationBarTitleText": "徽标数"
+            }
+        },
+        {
+            "path": "pages/componentsB/card/card",
+            "style": {
+                "navigationBarTitleText": "卡片"
+            }
+        },
+        {
+            "path": "pages/componentsB/code/code",
+            "style": {
+                "navigationBarTitleText": "验证码"
+            }
+        },
+        {
+            "path": "pages/componentsB/collapse/collapse",
+            "style": {
+                "navigationBarTitleText": "折叠面板"
+            }
+        },
+        {
+            "path": "pages/componentsB/color/color",
+            "style": {
+                "navigationBarTitleText": "色彩"
+            }
+        },
+        {
+            "path": "pages/componentsB/countDown/countDown",
+            "style": {
+                "navigationBarTitleText": "倒计时"
+            }
+        },
+        {
+            "path": "pages/componentsB/countTo/countTo",
+            "style": {
+                "navigationBarTitleText": "数字滚动"
+            }
+        },
+        {
+            "path": "pages/componentsB/dropdown/dropdown",
+            "style": {
+                "navigationBarTitleText": "下拉菜单"
+            }
+        },
+        {
+            "path": "pages/componentsB/keyboard/keyboard",
+            "style": {
+                "navigationBarTitleText": "键盘"
+            }
+        },
+        {
+            "path": "pages/componentsB/noticeBar/noticeBar",
+            "style": {
+                "navigationBarTitleText": "滚动通知"
+            }
+        },
+        {
+            "path": "pages/componentsB/notify/notify",
+            "style": {
+                "navigationBarTitleText": "消息提示"
+            }
+        },
+        {
+            "path": "pages/componentsB/numberBox/numberBox",
+            "style": {
+                "navigationBarTitleText": "步进器"
+            }
+        },
+        {
+            "path": "pages/componentsB/progress/progress",
+            "style": {
+                "navigationBarTitleText": "进度条"
+            }
+        },
+        {
+            "path": "pages/componentsB/search/search",
+            "style": {
+                "navigationBarTitleText": "搜索"
+            }
+        },
+        {
+            "path": "pages/componentsB/slider/slider",
+            "style": {
+                "navigationBarTitleText": "滑动选择器"
+            }
+        },
+        {
+            "path": "pages/componentsB/switch/switch",
+            "style": {
+                "navigationBarTitleText": "开关"
+            }
+        },
+        {
+            "path": "pages/componentsB/tabbar/tabbar",
+            "style": {
+                "navigationBarTitleText": "Tabbar"
+            }
+        },
+        {
+            "path": "pages/componentsB/tabbar/tabbar2",
+            "style": {
+                "navigationBarTitleText": "Tabbar"
+            }
+        },
+        {
+            "path": "pages/componentsB/table2/table2",
+            "style": {
+                "navigationBarTitleText": "表格2"
+            }
+        },
+        {
+            "path": "pages/componentsB/table/table",
+            "style": {
+                "navigationBarTitleText": "表格"
+            }
+        },
+        {
+            "path": "pages/componentsB/tag/tag",
+            "style": {
+                "navigationBarTitleText": "标签"
+            }
+        },
+        {
+            "path": "pages/componentsB/toast/toast",
+            "style": {
+                "navigationBarTitleText": "提示消息"
+            }
+        },
+        {
+            "path": "pages/componentsB/upload/upload",
+            "style": {
+                "navigationBarTitleText": "上传"
+            }
+        },
+        {
+            "path": "pages/componentsB/waterfall/waterfall",
+            "style": {
+                "navigationBarTitleText": "瀑布流"
+            }
+        },
+        {
+            "path": "pages/componentsC/album/album",
+            "style": {
+                "navigationBarTitleText": "相簿"
+            }
+        },
+        {
+            "path": "pages/componentsC/avatar/avatar",
+            "style": {
+                "navigationBarTitleText": "头像"
+            }
+        },
+        {
+            "path": "pages/componentsC/calendar/calendar",
+            "style": {
+                "navigationBarTitleText": "日历"
+            }
+        },
+        {
+            "path": "pages/componentsC/codeInput/codeInput",
+            "style": {
+                "navigationBarTitleText": "验证码输入"
+            }
+        },
+        {
+            "path": "pages/componentsC/datetimePicker/datetimePicker",
+            "style": {
+                "navigationBarTitleText": "时间选择"
+            }
+        },
+        {
+            "path": "pages/componentsC/form/form",
+            "style": {
+                "navigationBarTitleText": "表单"
+            }
+        },
+        {
+            "path": "pages/componentsC/indexList/indexList",
+            "style": {
+                "navigationBarTitleText": "索引列表"
+            }
+        },
+        {
+            "path": "pages/componentsC/indexList/indexList2",
+            "style": {
+                "navigationBarTitleText": "索引列表弹窗"
+            }
+        },
+        {
+            "path": "pages/componentsC/input/input",
+            "style": {
+                "navigationBarTitleText": "输入框"
+            }
+        },
+        {
+            "path": "pages/componentsC/layout/layout",
+            "style": {
+                "navigationBarTitleText": "布局"
+            }
+        },
+        {
+            "path": "pages/componentsC/list/list",
+            "style": {
+                "navigationBarTitleText": "列表"
+            }
+        },
+        {
+            "path": "pages/componentsC/loadmore/loadmore",
+            "style": {
+                "navigationBarTitleText": "加载更多"
+            }
+        },
+        {
+            "path": "pages/componentsC/messageInput/messageInput",
+            "style": {
+                "navigationBarTitleText": "验证码输入兼容"
+            }
+        },
+        {
+            "path": "pages/componentsC/modal/modal",
+            "style": {
+                "navigationBarTitleText": "模态框"
+            }
+        },
+        {
+            "path": "pages/componentsC/navbarIos/navbarIos",
+            "style": {
+                "navigationBarTitleText": "导航栏 iOS 模式"
+            }
+        },
+        {
+            "path": "pages/componentsC/navbar/navbar",
+            "style": {
+                "navigationBarTitleText": "导航栏"
+            }
+        },
+        {
+            "path": "pages/componentsC/noNetwork/noNetwork",
+            "style": {
+                "navigationBarTitleText": "无网络提示"
+            }
+        },
+        {
+            "path": "pages/componentsC/picker/picker",
+            "style": {
+                "navigationBarTitleText": "选择器"
+            }
+        },
+        {
+            "path": "pages/componentsC/popover/popover",
+            "style": {
+                "navigationBarTitleText": "Popover弹窗"
+            }
+        },
+        {
+            "path": "pages/componentsC/readMore/readMore",
+            "style": {
+                "navigationBarTitleText": "阅读更多"
+            }
+        },
+        {
+            "path": "pages/componentsC/scrollList/scrollList",
+            "style": {
+                "navigationBarTitleText": "横向滚动列表"
+            }
+        },
+        {
+            "path": "pages/componentsC/skeleton/skeleton",
+            "style": {
+                "navigationBarTitleText": "骨架屏"
+            }
+        },
+        {
+            "path": "pages/componentsC/steps/steps",
+            "style": {
+                "navigationBarTitleText": "步骤条"
+            }
+        },
+        {
+            "path": "pages/componentsC/subsection/subsection",
+            "style": {
+                "navigationBarTitleText": "分段器"
+            }
+        },
+        {
+            "path": "pages/componentsC/swiper/swiper",
+            "style": {
+                "navigationBarTitleText": "轮播"
+            }
+        },
+        {
+            "path": "pages/componentsC/tabs/tabs",
+            "style": {
+                "navigationBarTitleText": "标签"
+            }
+        },
+        {
+            "path": "pages/componentsC/text/text",
+            "style": {
+                "navigationBarTitleText": "验证码输入"
+            }
+        },
+        {
+            "path": "pages/componentsC/textarea/textarea",
+            "style": {
+                "navigationBarTitleText": "文本域"
+            }
+        },
+        {
+            "path": "pages/componentsD/agreement/agreement",
+            "style": {
+                "navigationBarTitleText": "Agreement协议"
+            }
+        },
+        {
+            "path": "pages/componentsD/barcode/barcode",
+            "style": {
+                "navigationBarTitleText": "Barcode条形码"
+            }
+        },
+        {
+            "path": "pages/componentsD/box/box",
+            "style": {
+                "navigationBarTitleText": "盒子"
+            }
+        },
+        {
+            "path": "pages/componentsD/cascader/cascader",
+            "style": {
+                "navigationBarTitleText": "Cascader级联选择"
+            }
+        },
+        {
+            "path": "pages/componentsD/cateTab/cateTab",
+            "style": {
+                "navigationBarTitleText": "CateTab分类标签"
+            }
+        },
+        {
+            "path": "pages/componentsD/choose/choose",
+            "style": {
+                "navigationBarTitleText": "Choose选择"
+            }
+        },
+        {
+            "path": "pages/componentsD/cityLocate/cityLocate",
+            "style": {
+                "navigationBarTitleText": "CityLocate城市定位"
+            }
+        },
+        {
+            "path": "pages/componentsD/colorPicker/colorPicker",
+            "style": {
+                "navigationBarTitleText": "ColorPicker颜色选择器"
+            }
+        },
+        {
+            "path": "pages/componentsD/copy/copy",
+            "style": {
+                "navigationBarTitleText": "Copy复制"
+            }
+        },
+        {
+            "path": "pages/componentsD/coupon/coupon",
+            "style": {
+                "navigationBarTitleText": "Coupon优惠券"
+            }
+        },
+        {
+            "path": "pages/componentsD/cropper/cropper",
+            "style": {
+                "navigationBarTitleText": "Cropper图片裁剪"
+            }
+        },
+        {
+            "path": "pages/componentsD/dragsort/dragsort",
+            "style": {
+                "navigationBarTitleText": "Dragsort拖拽排序"
+            }
+        },
+        {
+            "path": "pages/componentsD/floatButton/floatButton",
+            "style": {
+                "navigationBarTitleText": "FloatButton悬浮按钮"
+            }
+        },
+        {
+            "path": "pages/componentsD/goodsSku/goodsSku",
+            "style": {
+                "navigationBarTitleText": "GoodsSku商品SKU"
+            }
+        },
+        {
+            "path": "pages/componentsD/httpTest/httpTest",
+            "style": {
+                "navigationBarTitleText": "luch-request 测试"
+            }
+        },
+        {
+            "path": "pages/componentsD/markdown/markdown",
+            "style": {
+                "navigationBarTitleText": "Markdown解析器"
+            }
+        },
+        {
+            "path": "pages/componentsD/navbarMini/navbarMini",
+            "style": {
+                "navigationBarTitleText": "迷你导航"
+            }
+        },
+        {
+            "path": "pages/componentsD/novelReader/novelReader",
+            "style": {
+                "navigationBarTitleText": "NovelReader小说阅读器"
+            }
+        },
+        {
+            "path": "pages/componentsD/pagination/pagination",
+            "style": {
+                "navigationBarTitleText": "Pagination分页"
+            }
+        },
+        {
+            "path": "pages/componentsD/pdfReader/pdfReader",
+            "style": {
+                "navigationBarTitleText": "PdfReader PDF阅读器"
+            }
+        },
+        {
+            "path": "pages/componentsD/poster/poster",
+            "style": {
+                "navigationBarTitleText": "Poster海报生成"
+            }
+        },
+        {
+            "path": "pages/componentsD/pullRefresh/pullRefresh",
+            "style": {
+                "navigationBarTitleText": "PullRefresh下拉刷新"
+            }
+        },
+        {
+            "path": "pages/componentsD/select/select",
+            "style": {
+                "navigationBarTitleText": "Select选择器"
+            }
+        },
+        {
+            "path": "pages/componentsD/shortVideo/shortVideo",
+            "style": {
+                "navigationBarTitleText": "ShortVideo短视频切换"
+            }
+        },
+        {
+            "path": "pages/componentsD/signature/signature",
+            "style": {
+                "navigationBarTitleText": "Signature签名"
+            }
+        },
+        {
+            "path": "pages/componentsD/title/title",
+            "style": {
+                "navigationBarTitleText": "Title标题"
+            }
+        },
+        {
+            "path": "pages/componentsD/tree/tree",
+            "style": {
+                "navigationBarTitleText": "Tree树形控件"
+            }
+        },
+        {
+            "path": "pages/componentsD/video/video",
+            "style": {
+                "navigationBarTitleText": "Video 视频播放器"
+            }
+        },
+        {
+            "path": "pages/componentsD/virtualList/virtualList",
+            "style": {
+                "navigationBarTitleText": "VirtualList虚拟列表"
+            }
+        },
+        {
+            "path": "pages/example/components",
+            "style": {
+                "navigationBarTitleText": "uview-ultra"
+            }
+        },
+        {
+            "path": "pages/example/template",
+            "style": {
+                "navigationBarTitleText": "template"
+            }
+        }
+    ],
+    "easycom": {
+        "autoscan": true,
+        "custom": {
+            "^up-(.*)": "@/uni_modules/uview-ultra/components/up-$1/up-$1.vue"
+        }
+    },
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uview-ultra · Vue3",
+        "navigationBarBackgroundColor": "#FFFFFF",
+        "backgroundColor": "#F5F6FA"
+    }
+}

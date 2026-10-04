@@ -1,0 +1,205 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础用法</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item" style="display: flex;">
+					<up-upload
+						:fileList="fileList1"
+						useBeforeRead
+						@beforeRead="beforeRead"
+						@afterRead="afterRead"
+						@delete="deletePic"
+						name="1"
+						multiple
+						:maxCount="10"
+					></up-upload>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">上传视频</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item">
+				<up-upload
+				    :fileList="fileList2"
+				    @afterRead="afterRead"
+				    @delete="deletePic"
+				    name="2"
+				    multiple
+				    :maxCount="10"
+				    accept="video"
+				></up-upload>
+				</view>
+			</view>
+		</view>
+			<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">文件预览</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item">
+				<up-upload
+				    :fileList="fileList3"
+				    @afterRead="afterRead"
+				    @delete="deletePic"
+				    name="3"
+				    multiple
+				    :maxCount="10"
+				    :previewFullImage="true"
+				></up-upload>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">隐藏上传按钮</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item">
+				<up-upload
+				    :fileList="fileList4"
+				    @afterRead="afterRead"
+				    @delete="deletePic"
+				    name="4"
+				    multiple
+				    :maxCount="2"
+				></up-upload>
+				</view>
+			</view>
+		</view>
+			<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">限制上传数量</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item">
+				<up-upload
+				    :fileList="fileList5"
+				    @afterRead="afterRead"
+				    @delete="deletePic"
+				    name="5"
+				    multiple
+				    :maxCount="3"
+				></up-upload>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义上传样式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__upload-item">
+					<up-upload
+						:fileList="fileList6"
+						@afterRead="afterRead"
+						@delete="deletePic"
+						name="6"
+						multiple
+						:maxCount="1"
+						width="250"
+						height="150"
+					>
+						<image src="https://cdn.uviewui.com/uview/demo/upload/positive.png" mode="widthFix" style="width: 250px;height: 150px;"></image>
+					</up-upload>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const fileList1 = ref([] as UTSJSONObject[])
+	const fileList2 = ref([] as UTSJSONObject[])
+	const fileList3 = ref([{
+		url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+	}] as UTSJSONObject[])
+	const fileList4 = ref([
+		{
+			url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+		},
+		{
+			url: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+		}
+	] as UTSJSONObject[])
+	const fileList5 = ref([] as UTSJSONObject[])
+	const fileList6 = ref([] as UTSJSONObject[])
+
+	function getFileList(name: any | null): UTSJSONObject[] {
+		const key = name == null ? '' : name.toString()
+		if (key == '1') return fileList1.value
+		if (key == '2') return fileList2.value
+		if (key == '3') return fileList3.value
+		if (key == '4') return fileList4.value
+		if (key == '5') return fileList5.value
+		if (key == '6') return fileList6.value
+		return fileList1.value
+	}
+
+	function deletePic(event: UTSJSONObject) {
+		getFileList(event['name']).splice(event['index'] as number, 1)
+	}
+
+	function beforeRead() {
+		console.log('beforeRead')
+	}
+
+	async function afterRead(event: UTSJSONObject) {
+		const targetList = getFileList(event['name'])
+		const lists = ([] as UTSJSONObject[]).concat(event['file'] as UTSJSONObject[])
+		let fileListLen = targetList.length
+		lists.map((item: UTSJSONObject) => {
+			targetList.push({
+				...item,
+				status: 'uploading',
+				message: '上传中'
+			})
+		})
+		for (let i = 0; i < lists.length; i++) {
+			// const result = await uploadFilePromise(lists[i]['url'].toString())
+			// let item1 = targetList[fileListLen]
+			// let itemAdd = UTSJSONObject.assign(item1, {
+			// 	status: 'success',
+			// 	message: '',
+			// 	url: result['data'] as string
+			// }) as UTSJSONObject
+			// targetList.splice(fileListLen, 1, itemAdd)
+			// fileListLen++
+		}
+	}
+
+	function uploadFilePromise(url: string): Promise<UTSJSONObject | null> {
+		return new Promise((resolve, reject) => {
+			uni.uploadFile({
+				url: 'http://www.example.com/upload',
+				filePath: url,
+				name: 'file',
+				formData: {
+					user: 'test'
+				},
+				success: (res: UploadFileSuccess) => {
+					setTimeout(() => {
+						resolve(JSON.parseObject(res.data))
+					}, 1000)
+				}
+			})
+		})
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		&__upload-item{
+			margin-top:5px;
+			// width: 120px;
+			// height: 120px;
+		}
+	}
+</style>

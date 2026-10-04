@@ -1,0 +1,169 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基本案例</text>
+			</view>
+				<view class="u-page__slide-item">
+				<up-slider
+					:useNative="useNative"
+					v-model="value1"
+				></up-slider>
+			</view>
+			<up-button text="前进" @click="() => {value1 = value1 + 1}"></up-button>
+		</view>
+			<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义范围(10—50)</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+					:useNative="useNative"
+				    v-model="value2"
+					showValue
+				    min="10"
+				    max="50"
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">指定步长(每次步进5)</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+					:useNative="useNative"
+				    v-model="value4"
+				    :step="5"
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">小数步长(每次步进0.1)</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+				    v-model="value3"
+				    :step="0.1"
+				    :min="0"
+				    :max="1"
+				    showValue
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义样式</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+				    v-model="value5"
+				    activeColor="#deab8a"
+				    blockColor="#f47920"
+					height="20px"
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义样式(图片)</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+				    v-model="value5"
+				    activeColor="#deab8a"
+				    blockColor="#f47920"
+					height="4px"
+				>
+					<template #default>
+						<view>
+							<up-icon name="volume-fill" color="#CE4141" size="32"></up-icon>
+						</view>
+					</template>
+				</up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">区间选择(双滑块)</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-slider
+					isRange
+					showValue
+					step="2"
+				    v-model:rangeValue="value6"
+					height="2px"
+				></up-slider>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">在Modal弹窗中使用</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-text @click="modelShow = true" text="打开弹窗"></up-text>
+				<up-modal v-model:show="modelShow">
+				    <view class="slot-content" style="width: 100%">
+				      <up-slider v-if="modelShow" v-model="sliderValue" min="1" max="4" showValue></up-slider>
+				    </view>
+				</up-modal>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">在popup弹窗中使用</text>
+			</view>
+			<view class="u-page__slide-item">
+				<up-text @click="popupShow = true" text="打开弹窗"></up-text>
+				<up-popup v-model:show="popupShow">
+				    <view class="slot-content" style="width: 100%">
+				      <up-slider v-if="popupShow" v-model="sliderValue" min="1" max="4" showValue></up-slider>
+				    </view>
+				</up-popup>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref, watch } from 'vue'
+
+	const modelShow = ref(false)
+	const popupShow = ref(false)
+	const sliderValue = ref(4)
+	const useNative = ref(false)
+	const value1 = ref(30)
+	const value2 = ref(30)
+	const value3 = ref(0.3)
+	const value4 = ref(30)
+	const value5 = ref(30)
+	const value6 = ref([10, 20] as Array<number>)
+
+	watch(value1, (n: number) => {
+		// console.log(n)
+	})
+
+	function moving(value: number) {
+		// console.log('moving', value)
+	}
+
+	function click(value: number) {
+		// console.log('click', value)
+	}
+
+	function end(value: number) {
+		// console.log('end', value)
+	}
+
+	function start(value: number) {
+		// console.log('start', value)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		
+	}
+</style>

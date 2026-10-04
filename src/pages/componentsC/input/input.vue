@@ -1,0 +1,192 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础使用</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					v-model="value"
+					@change="change"
+				></up-input>
+				{{value}}
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">可清空内容</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					clearable
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">数字键盘</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					type="number"
+					clearable
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">密码类型</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					password
+					clearable
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">显示下划线</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="bottom"
+					clearable
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁用状态</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="禁用状态"
+					border="surround"
+					disabled
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">圆形</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="请输入内容"
+					border="surround"
+					shape="circle"
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">前后图标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input
+					placeholder="前置图标"
+					prefixIcon="search"
+					prefixIconStyle="font-size: 22px;color: #909399"
+				></up-input>
+			</view>
+			<view
+				class="u-demo-block__content"
+				style="margin-top: 15px;"
+			>
+				<up-input
+					placeholder="后置图标"
+					suffixIcon="map-fill"
+					suffixIconStyle="color: #909399"
+				></up-input>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">前后插槽</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-input placeholder="前置插槽">
+					<template #prefix>
+						<up-text
+							text="http://"
+							margin="0 3px 0 0"
+							type="tips"
+						></up-text>
+					</template>
+				</up-input>
+			</view>
+			<view
+				class="u-demo-block__content"
+				style="margin-top: 15px;"
+			>
+				<up-input placeholder="后置插槽">
+					<template #suffix>
+						<up-code
+							ref="upCodeRef"
+							@change="codeChange"
+							seconds="20"
+							changeText="X秒重新获取哈哈哈"
+						></up-code>
+						<up-button
+							@tap="getCode"
+							:text="tips"
+							type="success"
+							size="mini"
+						></up-button>
+					</template>
+				</up-input>
+			</view>
+		</view>
+		<up-gap
+			bgColor="#fff"
+			height="50"
+		></up-gap>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const upCodeRef = ref<ComponentPublicInstance | null>(null)
+	const tips = ref('')
+	const value = ref('')
+
+	function codeChange(text: string): void {
+		tips.value = text
+	}
+
+	function getCode(): void {
+		// if ((upCodeRef.value?.canGetCode() as boolean)) {
+		uni.showLoading({
+			title: '正在获取验证码'
+		})
+		setTimeout(() => {
+			uni.hideLoading()
+			uni.showToast({
+				title: '验证码已发送',
+				icon: 'success',
+				mask: true
+			})
+			// upCodeRef.value?.start()
+		}, 2000)
+		// }
+	}
+
+	function change(e: any): void {
+		console.log('change', e)
+	}
+</script>
+
+<style lang="scss">
+
+</style>

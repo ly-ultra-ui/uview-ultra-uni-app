@@ -1,0 +1,77 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">基础</view>
+			<view class="u-demo-block__content">
+				<up-pagination
+				    :current-page="currentPage"
+				    :page-size="pageSize"
+				    :total="total"
+				    :page-sizes="pageSizes"
+				    layout="prev, total, next"
+				    @current-change="handleCurrentChange"
+				    @size-change="handleSizeChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">上一页下一页文案</view>
+			<view class="u-demo-block__content">
+				<up-pagination
+					prevText="上一页"
+					nextText="下一页"
+				    :current-page="currentPage"
+				    :page-size="pageSize"
+				    :total="total"
+				    :page-sizes="pageSizes"
+				    layout="prev, total, next"
+				    @current-change="handleCurrentChange"
+				    @size-change="handleSizeChange"
+				  />
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">显示分页切换</view>
+			<view class="u-demo-block__content">
+				<up-pagination
+				    :current-page="currentPage"
+				    :page-size="pageSize"
+				    :total="total"
+				    :page-sizes="pageSizes"
+				    layout="prev, pager, next"
+				    @current-change="handleCurrentChange"
+				    @size-change="handleSizeChange"
+				  />
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const currentPage = ref(1)
+const pageSize = ref(10)
+const total = 100
+const pageSizes = [
+  { label: '10条/页', value: 10 },
+  { label: '20条/页', value: 20 },
+  { label: '30条/页', value: 30 }
+]
+
+function handleCurrentChange(page: number) {
+  console.log('当前页:', page)
+  currentPage.value = page
+}
+
+function handleSizeChange(size: number) {
+  console.log('每页条数:', size)
+  pageSize.value = size
+}
+</script>
+
+<style lang="scss" scoped>
+	.wrap {
+		padding: 24rpx;
+	}
+</style>

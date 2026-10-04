@@ -1,0 +1,128 @@
+<template>
+	<view class="u-page">
+		<up-navbar
+			title="遮罩层"
+			@leftClick="navigateBack"
+			safeAreaInsetTop
+			fixed
+			placeholder
+		></up-navbar>
+		<up-cell
+			:titleStyle="{fontWeight: 500}"
+			@click="openMask(index)"
+			:title="item['title']"
+			v-for="(item, index) in list"
+			:key="index"
+			isLink
+		>
+			<template #icon>
+				<image
+					class="u-cell-icon"
+					:src="item['iconUrl']"
+					mode="widthFix"
+				></image>
+			</template>
+		</up-cell>
+		<up-overlay
+			:show="show"
+			@click="show = !show"
+		></up-overlay>
+
+		<up-overlay
+			:show="showSlot"
+			@click="showSlot = !showSlot"
+		>
+			<view class="overlay-wrap">
+				<view class="overlay-wrap__box"></view>
+			</view>
+		</up-overlay>
+		<up-overlay
+			opacity=".85"
+			:show="showOpcatiy"
+			@click="showOpcatiy = !showOpcatiy"
+		>
+		</up-overlay>
+		<up-overlay
+			:show="showQrcode"
+			@click="showQrcode = false"
+		>
+			<view class="overlay-wrap">
+				<view class="overlay-wrap__qrcode">
+					<up-qrcode
+						cid="overlay-qrcode"
+						:size="180"
+						:showLoading="false"
+						val="https://click.meituan.com/t?t=1&c=2&p=WhaD2b5zGU-h"
+					></up-qrcode>
+				</view>
+			</view>
+		</up-overlay>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const show = ref(false)
+	const showSlot = ref(false)
+	const showOpcatiy = ref(false)
+	const showQrcode = ref(false)
+	const list = [{
+			title: '基本案列',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/baseCases.png'
+		},
+		{
+			title: '嵌入内容',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/embeddedContent.png'
+		},
+		{
+			title: '设置透明度',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/overlay/setTransparency.png'
+		},
+		{
+			title: '嵌入二维码',
+			iconUrl: 'https://cdn.uviewui.com/uview/demo/qrcode.png'
+		},
+	]
+
+	function openMask(indexNum: number): void {
+		if (indexNum == 0) {
+			show.value = !show.value
+		} else if (indexNum == 1) {
+			showSlot.value = !showSlot.value
+		} else if (indexNum == 2) {
+			showOpcatiy.value = !showOpcatiy.value
+		} else if (indexNum == 3) {
+			showQrcode.value = !showQrcode.value
+		}
+	}
+
+	function navigateBack(): void {
+		uni.navigateBack()
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+
+	.overlay-wrap {
+		@include flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+
+		&__box {
+			width: 200rpx;
+			height: 200rpx;
+			background-color: #70e1f5;
+		}
+
+		&__qrcode {
+			padding: 20px;
+			background-color: #ffffff;
+			border-radius: 4px;
+		}
+	}
+</style>

@@ -1,0 +1,112 @@
+<template>
+	<view class="content">		
+		<view class="main">
+			<view class="card">
+				<text class="title">颜色选择器示例</text>
+				
+                <up-color-picker
+                    v-model="selectedColor"
+                    @confirm="confirmColor"
+                >
+                    <view class="color-preview">
+                        <view class="color-block" :style="{ backgroundColor: selectedColor }"></view>
+                        <text class="color-text">{{ selectedColor }}</text>
+                    </view>
+                </up-color-picker>
+				
+				
+				<text class="desc">点击上方色块选择颜色</text>
+			</view>
+			
+			<view class="card">
+				<text class="title">带常用颜色的示例</text>
+				<up-color-picker
+                    v-model="selectedColor2"
+                    :commonColors="commonColors"
+                    @confirm="confirmColor2"
+                >
+                    <view class="color-preview">
+                        <view class="color-block" :style="{ backgroundColor: selectedColor2 }"></view>
+                        <text class="color-text">{{ selectedColor2 }}</text>
+                    </view>
+                    </up-color-picker>
+				<text class="desc">包含常用颜色选项</text>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selectedColor = ref('#ff0000')
+const selectedColor2 = ref('#00ff00')
+const commonColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#000000']
+
+function confirmColor(color: string) {
+  selectedColor.value = color
+}
+
+function confirmColor2(color: string) {
+  selectedColor2.value = color
+}
+</script>
+
+<style>
+	.content {
+		flex: 1;
+		background-color: #f5f5f5;
+	}
+	
+	.main {
+		padding: 20rpx;
+	}
+	
+	.card {
+		background-color: #ffffff;
+		border-radius: 16rpx;
+		padding: 30rpx;
+		margin-bottom: 20rpx;
+	}
+	
+	.title {
+		font-size: 32rpx;
+		font-weight: bold;
+		color: #333;
+		display: flex;
+		margin-bottom: 30rpx;
+	}
+	
+	.color-preview {
+		display: flex;
+		align-items: center;
+		padding: 30rpx;
+		background-color: #f8f8f8;
+		border-radius: 12rpx;
+		
+	}
+	
+	.color-block {
+		width: 80rpx;
+		height: 80rpx;
+		border-radius: 12rpx;
+		margin-right: 30rpx;
+		border: 1px solid #eee;
+	}
+	
+	.color-text {
+		font-size: 28rpx;
+		color: #666;
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.desc {
+		display: flex;
+		font-size: 24rpx;
+		color: #999;
+		margin-top: 20rpx;
+	}
+</style>

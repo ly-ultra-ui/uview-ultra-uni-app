@@ -1,0 +1,84 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础使用</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-textarea
+					v-model="value1"
+					placeholder="请输入内容"
+				></up-textarea>
+				{{value1}}
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">字数统计</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-textarea
+					v-model="value2"
+					placeholder="请输入内容"
+					count
+				></up-textarea>
+				{{value2}}
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自动增高</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-textarea
+					v-model="value3"
+					placeholder="请输入内容"
+					autoHeight
+				></up-textarea>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁用状态</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-textarea
+					v-model="value4"
+					placeholder="文本域已被禁用"
+					disabled
+					count
+				></up-textarea>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">下划线模式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-textarea
+					v-model="value5"
+					placeholder="请输入内容"
+					border="bottom"
+				></up-textarea>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+
+	const value1 = ref('')
+	const value2 = ref('统计字数')
+	const value3 = ref('')
+	const value4 = ref('')
+	const value5 = ref('')
+
+	function formatter(value: string): string {
+		return value.replace(/[^0-9]/ig, "")
+	}
+</script>
+
+<style lang="scss">
+
+</style>

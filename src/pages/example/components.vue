@@ -1,0 +1,93 @@
+<template>
+	<view class="wrap">
+		<page-nav :desc="desc"></page-nav>
+		<view class="list-wrap">
+			<up-cell-group title-bg-color="rgb(243, 244, 246)"
+				:title="item.groupName"
+				v-for="(item, index) in list" :key="index">
+				<up-cell :titleStyle="{fontWeight: 500}" :title="item1.title"
+					v-for="(item1, index1) in item.list" :key="index1"
+					isLink @click="openPage" :name="item1.path">
+					<template v-slot:icon>
+						<image
+							class="u-cell-icon"
+							:src="getIcon(item1.icon)"
+							mode="widthFix">
+						</image>
+					</template>
+				</up-cell>
+			</up-cell-group>
+			<up-button type="primary" text="uview-plus"></up-button>
+		</view>
+		<up-gap height="30px" bgColor="#fff"></up-gap>
+	</view>
+</template>
+
+<script setup lang="ts">
+	type groupListItem = {
+	  path: string
+	  icon: string
+	  title: string
+	  title_en: string
+	}
+	type groupType = {
+	  groupName: string
+	  groupName_en: string
+	  list: Array<groupListItem>
+	}
+	import componentsConfig from "./components.config"
+
+	const list = JSON.parse<groupType[]>(JSON.stringify(componentsConfig)) as groupType[]
+	const desc = 'uview-ultra 是全面兼容的uni-app-x/uni-app/nvue/鸿蒙等全生态的框架，全面的组件和便捷的工具与兼容的API会让开发体验保持一致。'
+	let navigating = false
+
+	function getIcon(path: string): string {
+		let iconName = path
+		if (path == 'navbarMini') {
+			iconName = 'navbar'
+		}
+		if (path == 'select') {
+			iconName = 'picker'
+		}
+		if (path == 'cateTab') {
+			iconName = 'tabs'
+		}
+		return '/static/uv/demo/' + iconName + '.png'
+	}
+
+	function openPage(detail: UTSJSONObject) {
+		const pathValue = detail['name']
+		if (pathValue == null || navigating) return
+		const path = pathValue.toString()
+		if (path == '') return
+		navigating = true
+		uni.navigateTo({
+			url: path,
+			success: () => {
+				navigating = false
+			},
+			fail: () => {
+				navigating = false
+			}
+		})
+	}
+</script>
+
+<style>
+	/* page {
+		background-color: rgb(240, 242, 244);
+	} */
+</style>
+
+<style lang="scss" >
+	
+	.u-cell-icon {
+		width: 36rpx;
+		height: 36rpx;
+		margin-right: 8rpx;
+	}
+	
+	.u-cell-group__title__text {
+		font-weight: bold;
+	}
+</style>

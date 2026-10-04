@@ -1,0 +1,240 @@
+<template>
+	<!-- #ifdef APP -->
+	<scroll-view style="flex:1" :direction="(!swipeScrolling ? 'vertical' : 'none')">
+	<!-- #endif -->
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">演示案例</text>
+			</view>
+			<view class="u-page__swipe-action-item">
+				<up-swipe-action>
+					<up-swipe-action-item
+						v-if="show1"
+						:show="true"
+						v-model:scrolling="swipeScrolling"
+						:options="options1"
+						@click="click"
+					>
+						<view class="swipe-action u-border-top u-border-bottom">
+							<view class="swipe-action__content">
+								<text class="swipe-action__content__text">基础使用</text>
+							</view>
+						</view>
+					</up-swipe-action-item>
+				</up-swipe-action>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">按钮组</text>
+			</view>
+			<view class="u-page__swipe-action-item">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options2">
+						<view class="swipe-action u-border-top u-border-bottom">
+							<view class="swipe-action__content">
+								<text class="swipe-action__content__text">两个按钮并列</text>
+							</view>
+						</view>
+					</up-swipe-action-item>
+				</up-swipe-action>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">带图标</text>
+			</view>
+			<view class="u-page__swipe-action-item">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options3">
+						<view class="swipe-action u-border-top u-border-bottom">
+							<view class="swipe-action__content">
+								<text class="swipe-action__content__text">自定义图标</text>
+							</view>
+						</view>
+					</up-swipe-action-item>
+				</up-swipe-action>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">组合使用</text>
+			</view>
+			<view class="u-page__swipe-action-item">
+				<up-swipe-action>
+					<up-swipe-action-item
+						:options="item['options']"
+						v-for="(item, index) in options4"
+						:disabled="item['disabled']"
+						:key="index"
+					>
+						<view
+							class="swipe-action u-border-top"
+							:class="[index === options4.length - 1 ? 'u-border-bottom' : '']"
+						>
+							<view class="swipe-action__content">
+								<text class="swipe-action__content__text">{{ item['text'] }}</text>
+							</view>
+						</view>
+					</up-swipe-action-item>
+				</up-swipe-action>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义按钮形状</text>
+			</view>
+			<view class="u-page__swipe-action-item">
+				<up-swipe-action>
+					<up-swipe-action-item :options="options5">
+						<view class="swipe-action u-border-top u-border-bottom">
+							<view class="swipe-action__content">
+								<text class="swipe-action__content__text">圆形按钮</text>
+							</view>
+						</view>
+					</up-swipe-action-item>
+				</up-swipe-action>
+			</view>
+		</view>
+	</view>
+	<!-- #ifdef APP -->
+	</scroll-view>
+	<!-- #endif -->
+</template>
+
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import type { UPSwipeActionItemOption } from '@/uni_modules/uview-ultra/types/index'
+
+	const show1 = ref(true)
+	const swipeScrolling = ref(false)
+	const options1 = [{
+		text: '删除',
+		style: {
+			backgroundColor: '#f56c6c'
+		}
+	}] as UPSwipeActionItemOption[]
+	const options2 = [{
+		text: '收藏',
+		style: {
+			backgroundColor: '#3c9cff'
+		}
+	}, {
+		text: '删除',
+		style: {
+			backgroundColor: '#f56c6c'
+		}
+	}] as UPSwipeActionItemOption[]
+	const options3 = [{
+		text: '收藏',
+		icon: 'star-fill',
+		iconSize: '20',
+		style: {
+			backgroundColor: '#f9ae3d'
+		}
+	}] as UPSwipeActionItemOption[]
+	const options4 = [{
+		text: '禁用状态',
+		disabled: true,
+		options: [{
+				text: '置顶',
+				style: {
+					backgroundColor: '#3c9cff',
+				}
+			},
+			{
+				text: '取消',
+				style: {
+					backgroundColor: '#f9ae3d',
+				}
+			},
+		] as UPSwipeActionItemOption[],
+	}, {
+		text: '正常状态',
+		disabled: false,
+		options: [{
+				text: '置顶',
+				style: {
+					backgroundColor: '#3c9cff',
+				}
+			},
+			{
+				text: '取消',
+				style: {
+					backgroundColor: '#f9ae3d',
+				}
+			},
+		] as UPSwipeActionItemOption[],
+	}, {
+		text: '自动关闭',
+		disabled: false,
+		options: [{
+				text: '置顶',
+				style: {
+					backgroundColor: '#3c9cff',
+				}
+			},
+			{
+				text: '取消',
+				style: {
+					backgroundColor: '#f9ae3d',
+				}
+			},
+		] as UPSwipeActionItemOption[],
+	}]
+	const options5 = [{
+		icon: 'trash-fill',
+		style: {
+			backgroundColor: '#f56c6c',
+			width: '40px',
+			height: '40px',
+			borderRadius: '100px',
+			margin: '0 6px'
+		}
+	}, {
+		icon: 'heart-fill',
+		style: {
+			backgroundColor: '#5ac725',
+			width: '40px',
+			height: '40px',
+			borderRadius: '100px',
+			margin: '0 6px'
+		}
+	}] as UPSwipeActionItemOption[]
+
+	function click(index: number) {
+		console.log('click', index)
+		uni.showModal({
+			title: '温馨提示',
+			content: '确定要删除吗？',
+			success: res => {
+				if (res.confirm) {
+					show1.value = false
+				}
+			}
+		})
+	}
+</script>
+
+<style lang="scss">
+	.u-page {
+		padding: 0;
+	}
+
+	.u-demo-block__title {
+		padding: 10px 0 2px 15px;
+	}
+
+	.swipe-action {
+		&__content {
+			padding: 25rpx 0;
+
+			&__text {
+				font-size: 15px;
+				color: $u-main-color;
+				padding-left: 30rpx;
+			}
+		}
+	}
+</style>

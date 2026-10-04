@@ -1,0 +1,167 @@
+<template>
+	<view class="u-page">
+		<view class="u-page__item">
+			<text class="u-page__item__title">头像裁剪</text>
+			<view class="u-page__item__content">
+				<up-cropper
+					ref="avatarRef0"
+					:can-change-size="false"
+					area-width="300rpx"
+					area-height="300rpx"
+					export-width="260rpx"
+					export-height="260rpx"
+					@confirm="cutImage"
+				>
+					<view class="avatar-wrapper">
+						<up-avatar :src="avatarUrl" size="120px"></up-avatar>
+					</view>
+				</up-cropper>
+			</view>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">横向裁剪</text>
+			<view class="u-page__item__content">
+				<view class="image-wrapper" @click="chooseWideImage">
+					<image v-if="wideUrl.length > 0" :src="wideUrl" class="preview-image" mode="widthFix"></image>
+					<text v-else class="empty-text">选择图片</text>
+				</view>
+				<up-cropper ref="wideRef" @confirm="cutImage"></up-cropper>
+			</view>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">限制在图片内</text>
+			<view class="u-page__item__content">
+				<view class="avatar-wrapper" @click="chooseInnerImage">
+					<up-avatar :src="innerUrl" size="120px"></up-avatar>
+				</view>
+				<up-cropper ref="innerRef" @confirm="cutImage"></up-cropper>
+			</view>
+		</view>
+		<view class="u-page__item">
+			<text class="u-page__item__title">裁剪已有图片</text>
+			<view class="u-page__item__content">
+				<text class="tips-text">业务侧先自行拍照/选图，再把临时路径交给裁剪器</text>
+				<view class="image-wrapper" @click="cropExistingImage">
+					<image v-if="existingUrl.length > 0" :src="existingUrl" class="preview-image" mode="widthFix"></image>
+					<text v-else class="empty-text">自行选图后裁剪</text>
+				</view>
+				<up-cropper ref="existingRef" @confirm="cutImage"></up-cropper>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const avatarUrl = ref('')
+const wideUrl = ref('')
+const innerUrl = ref('')
+const existingUrl = ref('')
+const wideRef = ref<ComponentPublicInstance | null>(null)
+const innerRef = ref<ComponentPublicInstance | null>(null)
+const existingRef = ref<ComponentPublicInstance | null>(null)
+
+function chooseWideImage(): void {
+	const cropper = wideRef.value
+	if (cropper == null) {
+		return
+	}
+	cropper.chooseImage(1, {
+		canChangeSize: true,
+		areaWidth: '300rpx',
+		areaHeight: '180rpx',
+		exportWidth: '260rpx',
+		exportHeight: '160rpx'
+	} as UTSJSONObject)
+}
+
+function chooseInnerImage(): void {
+	const cropper = innerRef.value
+	if (cropper == null) {
+		return
+	}
+	cropper.chooseImage(2, {
+		inner: true,
+		canChangeSize: false,
+		areaWidth: '300rpx',
+		areaHeight: '300rpx',
+		exportWidth: '260rpx',
+		exportHeight: '260rpx'
+	} as UTSJSONObject)
+}
+
+// 业务侧自行选图（也可以是拍照、下载等任意来源），拿到路径后直接交给裁剪器
+function cropExistingImage(): void {
+	const cropper = existingRef.value
+	if (cropper == null) {
+		return
+	}
+	uni.chooseImage({
+		count: 1,
+		sizeType: ['original', 'compressed'],
+		sourceType: ['album', 'camera'],
+		success: (res: ChooseImageSuccess) => {
+			if (res.tempFilePaths.length == 0) {
+				return
+			}
+			cropper.chooseImage(3, {
+				imageSrc: res.tempFilePaths[0],
+				areaWidth: '300rpx',
+				areaHeight: '300rpx',
+				exportWidth: '260rpx',
+				exportHeight: '260rpx'
+			} as UTSJSONObject)
+		}
+	})
+}
+
+function cutImage(result: UTSJSONObject): void {
+	const path = result['path'] == null ? '' : result['path'].toString()
+	const index = result['index'] == null ? 0 : parseInt(result['index'].toString())
+	if (index == 1) {
+		wideUrl.value = path
+	} else if (index == 2) {
+		innerUrl.value = path
+	} else if (index == 3) {
+		existingUrl.value = path
+	} else {
+		avatarUrl.value = path
+	}
+}
+</script>
+
+<style lang="scss" scoped>
+	.avatar-wrapper {
+		width: 120px;
+		height: 120px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.image-wrapper {
+		min-height: 120px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid #e5e5e5;
+		border-radius: 8px;
+		background-color: #ffffff;
+	}
+
+	.preview-image {
+		width: 100%;
+	}
+
+	.empty-text {
+		font-size: 14px;
+		color: #666666;
+	}
+
+	.tips-text {
+		font-size: 13px;
+		color: #909399;
+		margin-bottom: 8px;
+	}
+</style>

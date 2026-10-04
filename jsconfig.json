@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "types": ["@dcloudio/types"]
+    },
+    "include": ["src/**/*.js", "src/**/*.vue", "src/**/*.json"],
+    "exclude": ["node_modules", "dist", "unpackage"]
+}

@@ -1,0 +1,158 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基本案例</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-rate size="20"></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义选中星星数量</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item flex">
+					<up-rate
+						size="20"
+						v-model="value"
+						@change="change"
+					></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义星星大小</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__tag-item">
+					<up-rate size="30" count="4"></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">是否禁用评分</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate size="20" disabled></up-rate>
+				</view>
+			</view>
+		</view>
+    <view class="u-demo-block">
+      <view class="u-demo-block__title">
+				<text class="text">是否只读评分</text>
+			</view>
+      <view class="u-demo-block__content">
+        <view class="u-page__rate-item">
+          <up-rate size="20" readonly></up-rate>
+        </view>
+      </view>
+    </view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义选中星星颜色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate
+						size="20"
+						v-model="activeColorValue"
+						activeColor="#2979ff"
+					></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义未选中星星颜色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate
+						size="20"
+						v-model="value1"
+						inactiveColor="#2979ff"
+					></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">禁止触摸选择</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate size="20" :touchable="false"></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">允许触摸选择</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate size="20" :touchable="true"></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">是否允许半星</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate
+						size="20"
+						v-model="HalfValue"
+						:allowHalf="true"
+						@change="change"
+					></up-rate>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义选中的图标</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__rate-item">
+					<up-rate
+						size="20"
+						v-model="activeIconValue"
+						inactiveIcon="heart"
+						activeIcon="heart-fill"
+					></up-rate>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	import { ref, watch } from 'vue'
+
+	const value = ref(3)
+	const value1 = ref(2)
+	const activeColorValue = ref(3)
+	const HalfValue = ref(3.5)
+	const activeIconValue = ref(3)
+
+	watch(value, (newValue: number, oldValue: number) => {
+		// console.log(newValue)
+	})
+
+	function change(e: number) {
+		// console.log('change', e)
+	}
+</script>
+
+<style lang="scss">
+	.u-page {}
+</style>

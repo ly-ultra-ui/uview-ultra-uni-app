@@ -1,0 +1,107 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基本案例</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					 <up-image
+					     :showLoading="true"
+					     :src="src"
+					     width="80px"
+					     height="80px"
+						 @click="click"
+					 ></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义形状</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    shape="circle"
+					    :src="src"
+					    width="80px"
+					    height="80px"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义圆角</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    radius="4"
+					    :src="src"
+					    width="80px"
+					    height="80px"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">图片模式(widthFix)</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src"
+					    width="80px"
+					    height="80px"
+						mode="widthFix"
+					></up-image>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义图片加载插槽</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__image-item">
+					<up-image
+					    :src="src1"
+					    width="80px"
+					    height="80px"
+						mode="widthFix"
+					>
+						<template v-slot:loading>
+							<up-loading-icon color="red"></up-loading-icon>
+						</template>
+					</up-image>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app'
+
+	import { ref } from 'vue'
+
+	const src = 'https://cdn.uviewui.com/uview/album/1.jpg'
+	const src1 = ref('')
+
+	onLoad((_options: OnLoadOptions) => {
+		setTimeout(() => {
+			src1.value = src
+		}, 3000)
+	})
+
+	function click(e: any) {
+		console.log('click')
+	}
+</script>
+
+<style lang="scss">
+	 
+</style>

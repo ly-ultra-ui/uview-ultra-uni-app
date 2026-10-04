@@ -1,0 +1,108 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基础功能</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text1"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">可关闭</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text5"
+					mode="closable"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义横向滚动速度</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text2"
+					speed="250"
+					mode="closable"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">可跳转(点击右箭头)</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text3"
+					mode="link"
+					url="/pages/componentsB/tag/tag"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">横向步进滚动</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text4"
+					:step="true"
+					@click="click"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">纵向滚动</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text4"
+					direction="column"
+					@click="click"
+				></up-notice-bar>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义样式</text>
+			</view>
+			<view class="u-demo-block__content">
+				<up-notice-bar
+				    :text="text1"
+					color="#ffffff"
+					bgColor="#f56c6c"
+				></up-notice-bar>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+	const text1 = 'uview-plus众多组件覆盖开发过程的各个需求，组件功能丰富，多端兼容。让您快速集成，开箱即用'
+	const text2 = 'uview-plus众多的贴心小工具，是您开发过程中召之即来的利器，让您飞镖在手，百步穿杨'
+	const text3 = 'uview-plus收集众多的常用页面和布局，减少开发者的重复工作，让您专注逻辑，事半功倍'
+	const text4 = [
+		'寒雨连江夜入吴',
+		'平明送客楚山孤',
+		'洛阳亲友如相问',
+		'一片冰心在玉壶'
+	]
+	const text5 = '涵盖uniapp各个方面，给开发者方向指导和设计理念，让您茅塞顿开，一马平川'
+
+	function click(e: any) {
+		console.log(e)
+	}
+</script>
+
+<style lang="scss">
+	.u-demo-block__content {
+		@include flex(column);
+	}
+</style>

@@ -1,0 +1,84 @@
+<template>
+	<view class="u-page">
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">基本案列</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon></up-loading-icon>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">半圆loading</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon mode="semicircle"></up-loading-icon>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">圆形loading</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon mode="circle"></up-loading-icon>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义动画</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon mode="circle" timingFunction="linear"></up-loading-icon>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义颜色</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon color="#19be6b"></up-loading-icon>
+				</view>
+			</view>
+		</view>
+		<view class="u-demo-block">
+			<view class="u-demo-block__title">
+				<text class="text">自定义文字</text>
+			</view>
+			<view class="u-demo-block__content">
+				<view class="u-page__loading-item">
+					<up-loading-icon
+					    :vertical="true"
+					    text="加载中"
+					></up-loading-icon>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script setup lang="ts">
+</script>
+
+<style lang="scss">
+	.u-page {
+		&__loading-item {
+			margin-top: 5px;
+		}
+	}
+
+	.u-demo-block__content {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+</style>
