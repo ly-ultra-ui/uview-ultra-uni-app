@@ -41,7 +41,10 @@ function resolveSpecifier(fromFile, specifier) {
 }
 
 function walk(dir, out = []) {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    // 显式排序：readdirSync 的顺序依赖文件系统，Windows 与 Linux 不一致
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+        .sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))
+    for (const entry of entries) {
         const full = path.join(dir, entry.name)
         if (entry.isDirectory()) {
             if (entry.name === 'node_modules') continue

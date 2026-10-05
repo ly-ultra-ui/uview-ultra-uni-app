@@ -60,7 +60,12 @@ function rel(target) {
 }
 
 function walk(dir, out = []) {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    // readdirSync 的返回顺序取决于文件系统（Windows 与 Linux 不一致），
+    // 不显式排序的话生成的 pages.json / demo-manifest.js 会随平台变化，
+    // 门禁 A 段就会在 CI 上误报漂移。用码点比较，不要用 localeCompare（依赖 locale）。
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+        .sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))
+    for (const entry of entries) {
         const full = path.join(dir, entry.name)
         if (entry.isDirectory()) {
             walk(full, out)

@@ -103,6 +103,9 @@ function walk(dir, predicate, out = []) {
     } catch {
         return out
     }
+    // 显式排序：readdirSync 的顺序依赖文件系统，Windows 与 Linux 不一致，
+    // 不排序的话报错清单的顺序会随平台变化，CI 日志不好比对
+    entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0))
     for (const entry of entries) {
         const full = path.join(dir, entry.name)
         if (entry.isDirectory()) {
