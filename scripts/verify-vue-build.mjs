@@ -32,7 +32,7 @@ import babelParser from '@babel/parser'
 import babelTraverse from '@babel/traverse'
 import { compileScript, compileTemplate, parse as parseSfc } from 'vue/compiler-sfc'
 
-import { detectDrift } from './sync-demo-pages.mjs'
+import { detectDrift, describeDrift } from './sync-demo-pages.mjs'
 import { checkImportExports } from './check-import-exports.mjs'
 import { scanImportExtensions } from './fix-vue-import-extensions.mjs'
 
@@ -471,13 +471,17 @@ async function main() {
     try {
         drift = detectDrift()
     } catch (error) {
-        drift = ['无法比对示例页：' + firstLine(error)]
+        drift = [{ file: '无法比对示例页：' + firstLine(error), expected: '', actual: null }]
     }
     if (drift.length === 0) {
         console.log('示例页与 uview-plus4/pages 一致')
     } else {
         console.log('示例页与源仓库不一致，执行 pnpm sync:demo 重新生成：')
-        for (const item of drift) console.log('  ✗ ' + item)
+        for (const item of drift) {
+            console.log('  ✗ ' + item.file)
+            // 打印第一处不同：CI 与本地不一致时（换行、路径分隔符、顺序）一眼能定位
+            for (const line of describeDrift(item)) console.log('      ' + line)
+        }
     }
 
     printSection('B. 导入解析检查')

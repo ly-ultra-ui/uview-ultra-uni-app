@@ -369,12 +369,16 @@ function buildManifest(pages) {
 function emit(targetPath, content) {
     const absolute = path.join(ROOT, 'src', targetPath)
     const existing = fs.existsSync(absolute) ? fs.readFileSync(absolute, 'utf8') : null
-    if (existing === content) {
+    // 用忽略行尾的比较：检出时 git 可能把行尾改成 CRLF，那种情况不该算漂移、也不必重写
+    if (sameIgnoringEol(existing, content)) {
         written.push(targetPath)
         return
     }
     if (CHECK_ONLY) {
         problems.push('与源仓库不一致：' + rel(absolute))
+        for (const line of describeDrift({ expected: content, actual: existing })) {
+            problems.push('    ' + line)
+        }
         return
     }
     fs.mkdirSync(path.dirname(absolute), { recursive: true })
@@ -382,33 +386,58 @@ function emit(targetPath, content) {
     written.push(targetPath)
 }
 
+/**
+ * 比较时忽略行尾差异：uview-plus4 是混合行尾，而 git 的 autocrlf 会在检出时改写行尾，
+ * 不归一化的话新克隆的仓库会一直误报漂移。
+ */
+function sameIgnoringEol(left, right) {
+    if (left === null || right === null) return false
+    return left.replace(/\r\n/g, '\n') === right.replace(/\r\n/g, '\n')
+}
+
 /** 供门禁调用：返回与源仓库不一致的文件清单（空数组表示没有漂移） */
 export function detectDrift() {
     const drift = []
-    // 比较时把行尾归一化：uview-plus4 是混合行尾，而 git 的 autocrlf 会在检出时改写行尾，
-    // 不归一化的话新克隆的仓库会一直误报漂移
-    const same = (left, right) => {
-        if (left === null) return false
-        return left.replace(/\r\n/g, '\n') === right.replace(/\r\n/g, '\n')
-    }
     const pages = buildTargets()
+    const push = (file, expected, actual) => drift.push({ file: rel(file), expected, actual })
     for (const page of pages) {
         const absolute = path.join(ROOT, 'src', page.relativePath)
         const existing = fs.existsSync(absolute) ? fs.readFileSync(absolute, 'utf8') : null
-        if (!same(existing, page.content)) drift.push(rel(absolute))
+        if (!sameIgnoringEol(existing, page.content)) push(absolute, page.content, existing)
     }
+    const pagesJson = buildPagesJson(pages)
     if (!fs.existsSync(TARGET_PAGES_JSON)) {
-        drift.push(rel(TARGET_PAGES_JSON))
-    } else if (!same(fs.readFileSync(TARGET_PAGES_JSON, 'utf8'), buildPagesJson(pages))) {
-        drift.push(rel(TARGET_PAGES_JSON))
+        push(TARGET_PAGES_JSON, pagesJson, null)
+    } else {
+        const actual = fs.readFileSync(TARGET_PAGES_JSON, 'utf8')
+        if (!sameIgnoringEol(actual, pagesJson)) push(TARGET_PAGES_JSON, pagesJson, actual)
     }
     const manifest = buildManifest(pages)
     if (!fs.existsSync(TARGET_MANIFEST)) {
-        drift.push(rel(TARGET_MANIFEST))
-    } else if (!same(fs.readFileSync(TARGET_MANIFEST, 'utf8'), manifest)) {
-        drift.push(rel(TARGET_MANIFEST))
+        push(TARGET_MANIFEST, manifest, null)
+    } else {
+        const actual = fs.readFileSync(TARGET_MANIFEST, 'utf8')
+        if (!sameIgnoringEol(actual, manifest)) push(TARGET_MANIFEST, manifest, actual)
     }
     return drift
+}
+
+/** 打印第一处不同的行，跨平台差异（换行、路径分隔符、顺序）一眼可见 */
+export function describeDrift(item) {
+    if (item.actual === null) return ['文件不存在']
+    const expected = item.expected.replace(/\r\n/g, '\n').split('\n')
+    const actual = item.actual.replace(/\r\n/g, '\n').split('\n')
+    const total = Math.max(expected.length, actual.length)
+    for (let index = 0; index < total; index += 1) {
+        if (expected[index] !== actual[index]) {
+            return [
+                '第 ' + (index + 1) + ' 行不同：',
+                '  期望: ' + JSON.stringify(expected[index]),
+                '  实际: ' + JSON.stringify(actual[index]),
+            ]
+        }
+    }
+    return ['内容不同但逐行比对没找到差异（可能是行尾）']
 }
 
 function main() {
@@ -432,8 +461,20 @@ function main() {
     const existingManifest = fs.existsSync(TARGET_MANIFEST) ? fs.readFileSync(TARGET_MANIFEST, 'utf8') : null
 
     if (CHECK_ONLY) {
-        if (existingPagesJson !== pagesJson) problems.push('与源仓库不一致：' + rel(TARGET_PAGES_JSON))
-        if (existingManifest !== manifest) problems.push('与源仓库不一致：' + rel(TARGET_MANIFEST))
+        // 复用上面已经算好的内容，不要再调 detectDrift()：
+        // 它会重新跑一遍 buildTargets()，把 skipped 计数累加两遍
+        const items = []
+        const compare = (target, expected, actual) => {
+            if (actual === null || !sameIgnoringEol(actual, expected)) {
+                items.push({ file: rel(target), expected, actual })
+            }
+        }
+        compare(TARGET_PAGES_JSON, pagesJson, existingPagesJson)
+        compare(TARGET_MANIFEST, manifest, existingManifest)
+        for (const item of items) {
+            problems.push('与源仓库不一致：' + item.file)
+            for (const line of describeDrift(item)) problems.push('    ' + line)
+        }
     } else {
         fs.writeFileSync(TARGET_PAGES_JSON, pagesJson)
         fs.mkdirSync(path.dirname(TARGET_MANIFEST), { recursive: true })
