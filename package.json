@@ -5,6 +5,8 @@
   "description": "uview-ultra 在 uni-app Vue3（非 uni-app x）模式下的独立冒烟与编译门禁工程",
   "scripts": {
     "setup:links": "node scripts/setup-links.mjs",
+    "setup:links:npm": "node scripts/setup-links.mjs --from-npm",
+    "setup:links:status": "node scripts/setup-links.mjs --status",
     "sync:demo": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sync-demo-pages.mjs",
     "verify:demo-sync": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sync-demo-pages.mjs --check",
     "check:import-exports": "node scripts/check-import-exports.mjs",
@@ -16,6 +18,9 @@
     "build:mp-weixin": "uni build -p mp-weixin",
     "verify:vue-build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-vue-build.mjs",
     "verify:vue-modules": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/verify-vue-build.mjs --modules-only"
+  },
+  "uvLib": {
+    "npmSpec": "uview-ultra@4.5.46"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

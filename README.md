@@ -27,7 +27,7 @@ uview-plus4-vue3/
 ├── package.json
 ├── vite.config.js
 ├── scripts/
-│   ├── setup-links.mjs              # 建立指向 uview-plus4 的目录联接
+│   ├── setup-links.mjs              # 库源切换：目录联接 ↔ npm 包
 │   ├── sync-demo-pages.mjs          # 把 uview-plus4 的 .uvue 示例页同步成 .vue
 │   ├── fix-vue-import-extensions.mjs# 补全被 .uts 孪生抢掉的导入扩展名
 │   ├── check-import-exports.mjs     # 导入的名字对方到底有没有导出
@@ -39,20 +39,36 @@ uview-plus4-vue3/
     ├── manifest.json                # 无 uni-app-x 段，vueVersion = 3
     ├── pages.json                   # 由 sync-demo-pages 生成
     ├── pages/                       # 首页 + 126 个示例页（生成物）
-    ├── uni_modules/uview-ultra      # 目录联接 → ../uview-plus4/uni_modules/uview-ultra
+    ├── uni_modules/uview-ultra      # 库源：目录联接（默认）或 npm 包解压，见「库源」一节
     ├── static                       # 目录联接 → ../uview-plus4/static
     └── common                       # 目录联接 → ../uview-plus4/common
 ```
 
-## 接入方式：全部走目录联接，不复制源码
+## 库源：两种模式，由 `pnpm setup:links` 切换
 
-三个 junction 由 `pnpm setup:links` 建立（都写进了 `.gitignore`），改 `uview-plus4` 里的组件源码或静态资源，本工程即时可见：
+本工程可以对着**两份** uview-ultra 验证，分别覆盖不同场景：
 
-| 联接 | 指向 | 用途 |
-| --- | --- | --- |
-| `src/uni_modules/uview-ultra` | `../uview-plus4/uni_modules/uview-ultra` | 组件源码 |
-| `src/static` | `../uview-plus4/static` | 示例页引用的图片等静态资源 |
-| `src/common` | `../uview-plus4/common` | `province.js` / `city.js` 等示例数据 + `demo.scss` |
+| 模式 | 命令 | `src/uni_modules/uview-ultra` 指向 | 用来抓什么问题 |
+| --- | --- | --- | --- |
+| **link**（默认） | `pnpm setup:links` | `../uview-plus4/uni_modules/uview-ultra` 的目录联接 | 改库时的即时反馈 |
+| **npm** | `pnpm setup:links:npm` | 从 npm 包解压（默认 `uview-ultra@4.5.46`，见 `package.json` 的 `uvLib.npmSpec`） | **改了没提交 / 提交了没发版**：验证的是线上发布物 |
+
+```bash
+pnpm setup:links:status                      # 看当前是哪种模式
+pnpm setup:links:npm                         # 切到 npm 包
+pnpm setup:links:npm uview-ultra@4.5.45      # 也可以指定别的版本
+pnpm setup:links                             # 切回联接
+```
+
+切换后直接跑门禁即可，配置一个字都不用改——`main.js`、`App.vue`、`pages.json`
+里的路径始终是 `@/uni_modules/uview-ultra`。
+
+> npm 模式的实现是 `npm pack` 打 tarball 再 `npm install <tarball> --prefix` 解到工作区，
+> 没用 `tar` 命令：Git Bash 的 PATH 是 POSIX 形式（`/usr/bin`），
+> Windows 原生的 `spawnSync` 解析不到 `tar.exe`。
+
+示例资源（`src/static`、`src/common`）在两种模式下**都**是指向 `../uview-plus4` 的目录联接——
+示例页的图片、`province.js` / `city.js`、`demo.scss` 只存在于那个仓库里，npm 包不含这些。
 
 ## 示例页怎么来的
 
@@ -77,14 +93,16 @@ pnpm verify:demo-sync   # 只检查是否与源仓库一致（门禁的 A 段也
 
 ```bash
 pnpm install
-pnpm setup:links       # 建目录联接（换机器 / 目录被清掉时才需要）
-pnpm sync:demo         # 同步示例页（首次和 uview-plus4/pages 变更后）
+pnpm setup:links         # 库源 = 目录联接指向 ../uview-plus4（换机器 / 目录被清掉时才需要）
+pnpm setup:links:npm     # 库源 = npm 包 uview-ultra@4.5.46（验证线上发布物）
+pnpm setup:links:status  # 看当前是哪种库源
+pnpm sync:demo           # 同步示例页（首次和 uview-plus4/pages 变更后）
 
 pnpm dev:h5            # 浏览器里逐个点开示例页（默认 http://localhost:5200）
 pnpm dev:mp-weixin     # 微信小程序开发者工具
 
 pnpm verify:vue-build    # 编译门禁（全量扫描 + H5 构建）
-pnpm verify:vue-modules  # 只跑静态扫描，不跑构建，约 3 秒
+pnpm verify:vue-modules  # 只跑静态扫描，不跑构建，约 4 秒
 pnpm verify:demo-pages   # 逐页运行时冒烟（需先起 dev:h5）
 ```
 

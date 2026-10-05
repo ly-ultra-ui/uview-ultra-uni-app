@@ -1,6 +1,7 @@
 node_modules/
 dist/
 unpackage/
+cachePath/
 .verify-build.log
 .demo-report.json
 .demo-screenshots/
@@ -8,7 +9,7 @@ unpackage/
 *.log
 *-lock.json
 
-# 指向 uview-plus4 的目录联接，由 pnpm setup:links 建立
+# uview-ultra 库源，由 pnpm setup:links 建立（目录联接，或 --from-npm 解压的 npm 包）
 src/uni_modules/uview-ultra
 src/static
 src/common
