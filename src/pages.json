@@ -373,15 +373,15 @@
             }
         },
         {
-            "path": "pages/componentsB/table2/table2",
-            "style": {
-                "navigationBarTitleText": "表格2"
-            }
-        },
-        {
             "path": "pages/componentsB/table/table",
             "style": {
                 "navigationBarTitleText": "表格"
+            }
+        },
+        {
+            "path": "pages/componentsB/table2/table2",
+            "style": {
+                "navigationBarTitleText": "表格2"
             }
         },
         {
@@ -493,15 +493,15 @@
             }
         },
         {
-            "path": "pages/componentsC/navbarIos/navbarIos",
-            "style": {
-                "navigationBarTitleText": "导航栏 iOS 模式"
-            }
-        },
-        {
             "path": "pages/componentsC/navbar/navbar",
             "style": {
                 "navigationBarTitleText": "导航栏"
+            }
+        },
+        {
+            "path": "pages/componentsC/navbarIos/navbarIos",
+            "style": {
+                "navigationBarTitleText": "导航栏 iOS 模式"
             }
         },
         {

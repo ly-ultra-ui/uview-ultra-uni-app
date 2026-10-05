@@ -251,7 +251,15 @@ function buildTargets() {
     const targets = []
     const takenTargets = new Map()
 
-    const sourceFiles = walk(SOURCE_PAGES).sort()
+    // 必须按「规范化后的相对路径」排序，不能直接用原始路径：
+    // Windows 的分隔符是 \ (0x5C)、Linux 是 / (0x2F)，两者码点不同，
+    // 于是 table 与 table2、tabs 与 tabsPro 这类「目录名互为前缀」的先后顺序会反过来，
+    // 生成的 pages.json / demo-manifest.js 就随平台漂移。
+    const sourceFiles = walk(SOURCE_PAGES).sort((left, right) => {
+        const a = rel(left)
+        const b = rel(right)
+        return a < b ? -1 : a > b ? 1 : 0
+    })
     const uvueFiles = []
     const directFiles = []
 

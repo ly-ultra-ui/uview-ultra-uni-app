@@ -185,12 +185,12 @@ export default [
                 "path": "pages/componentsB/tabbar/tabbar2"
             },
             {
-                "title": "表格2",
-                "path": "pages/componentsB/table2/table2"
-            },
-            {
                 "title": "表格",
                 "path": "pages/componentsB/table/table"
+            },
+            {
+                "title": "表格2",
+                "path": "pages/componentsB/table2/table2"
             },
             {
                 "title": "标签",
@@ -274,12 +274,12 @@ export default [
                 "path": "pages/componentsC/modal/modal"
             },
             {
-                "title": "导航栏 iOS 模式",
-                "path": "pages/componentsC/navbarIos/navbarIos"
-            },
-            {
                 "title": "导航栏",
                 "path": "pages/componentsC/navbar/navbar"
+            },
+            {
+                "title": "导航栏 iOS 模式",
+                "path": "pages/componentsC/navbarIos/navbarIos"
             },
             {
                 "title": "无网络提示",

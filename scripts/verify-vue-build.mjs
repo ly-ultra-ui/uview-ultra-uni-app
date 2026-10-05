@@ -96,6 +96,17 @@ function relative(target) {
     return path.relative(ROOT, target).split(path.sep).join('/')
 }
 
+/**
+ * 按「规范化后的相对路径」排序。不能直接排原始路径：
+ * Windows 的分隔符是 \ (0x5C)、Linux 是 / (0x2F)，码点不同会让
+ * table 与 table2 这类「目录名互为前缀」的先后顺序反过来，报告顺序就随平台变。
+ */
+function byRelativePath(left, right) {
+    const a = relative(left)
+    const b = relative(right)
+    return a < b ? -1 : a > b ? 1 : 0
+}
+
 function walk(dir, predicate, out = []) {
     let entries
     try {
@@ -307,7 +318,7 @@ function scanSfcFiles() {
 /* ------------------------------------------------- B. 未声明标识符扫描（no-undef） */
 
 function scanUndefinedIdentifiers() {
-    const files = walk(LIB, (file) => file.endsWith('.js') && !SKIP_JS_FILES.has(file)).sort()
+    const files = walk(LIB, (file) => file.endsWith('.js') && !SKIP_JS_FILES.has(file)).sort(byRelativePath)
     for (const file of files) {
         const source = preprocess(fs.readFileSync(file, 'utf8'), PLATFORM).code
         let ast
@@ -387,7 +398,7 @@ function installHostStubs() {
 }
 
 async function smokeModules() {
-    const files = walk(LIB, (file) => file.endsWith('.js') && !SKIP_JS_FILES.has(file)).sort()
+    const files = walk(LIB, (file) => file.endsWith('.js') && !SKIP_JS_FILES.has(file)).sort(byRelativePath)
     let skipped = 0
     for (const file of files) {
         const raw = fs.readFileSync(file, 'utf8')
