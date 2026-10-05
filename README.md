@@ -164,6 +164,25 @@ pnpm verify:demo-pages --no-screenshot
 - 截图落在 `.demo-screenshots/`，报告落在 `.demo-report.json`。
 - playwright 解析顺序：`PLAYWRIGHT_MODULE` 环境变量 → 本地依赖 → 托管 node 工作区。
 
+## CI
+
+`.github/workflows/verify.yml`，push / PR / 手动触发都会跑，两个矩阵项各跑一遍编译门禁：
+
+| 矩阵项 | 库源 | 作用 |
+| --- | --- | --- |
+| 工作区源码（link） | `pnpm setup:links` | 验证 `ijry/uview-ultra@4.x` 的当前分支 |
+| 线上发布物（npm） | `pnpm setup:links:npm` | 验证 npm 上已发布的版本 |
+
+**两个都要跑**：只跑 link 会漏掉「改了没提交 / 提交了没发版」，只跑 npm 则 `uview-plus4` 的改动根本进不了验证。
+
+CI 会把 `ijry/uview-ultra` 的 `4.x` 检出成**同级目录** `uview-plus4`——
+示例页、`static`、`common`、`demo.scss` 都在那里，本工程的目录联接与脚本都按 `../uview-plus4` 解析。
+
+npm 矩阵项里还有一步会在 `uvLib.npmSpec` 落后于 `uview-plus4` 仓库版本时打一条 warning。
+
+> 逐页运行时冒烟（`pnpm verify:demo-pages`）**不在 CI 里**：它要起 dev server 加 Playwright
+> 浏览器，跑一轮约 5 分钟，且会被外部 CDN 的图片/视频干扰。留作发版前本地跑一遍。
+
 ## 注意
 
 - 本工程只覆盖 **uni-app Vue3** 链路。uni-app x（Android / iOS / 鸿蒙）的验证仍然在 `uview-plus4` 里做，

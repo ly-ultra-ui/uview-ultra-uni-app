@@ -1,0 +1,86 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: 编译门禁 · ${{ matrix.label }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 两种库源各跑一遍：link 验证 uview-plus4 的当前分支，npm 验证线上发布物。
+          # 只看一种都盖不住 —— 只跑 link 会漏掉「改了没发版」，
+          # 只跑 npm 则 uview-plus4 的 PR 根本进不了验证。
+          - label: 工作区源码（link）
+            setup: pnpm setup:links
+          - label: 线上发布物（npm）
+            setup: pnpm setup:links:npm
+    steps:
+      - name: 检出本工程
+        uses: actions/checkout@v4
+        with:
+          path: harness
+
+      # 示例页、静态资源、省市区数据、demo.scss 都在 uview-plus4 里，必须作为同级目录检出：
+      # 本工程的目录联接与脚本都按 ../uview-plus4 解析。
+      - name: 检出 uview-plus4
+        uses: actions/checkout@v4
+        with:
+          repository: ijry/uview-ultra
+          ref: 4.x
+          path: uview-plus4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 安装 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: harness/pnpm-lock.yaml
+
+      - name: 安装依赖
+        working-directory: harness
+        run: pnpm install --frozen-lockfile
+
+      - name: 切换库源
+        working-directory: harness
+        run: ${{ matrix.setup }}
+
+      - name: 检查锁定的 npm 库源是否落后于仓库版本
+        if: matrix.setup == 'pnpm setup:links:npm'
+        working-directory: harness
+        run: |
+          repo_version=$(node -p "require('../uview-plus4/uni_modules/uview-ultra/package.json').version")
+          pinned=$(node -p "require('./package.json').uvLib.npmSpec")
+          echo "uview-plus4 仓库版本: $repo_version"
+          echo "锁定的 npm 库源    : $pinned"
+          if [ "$pinned" != "uview-ultra@$repo_version" ]; then
+            echo "::warning title=uvLib.npmSpec 落后::仓库版本是 $repo_version，而锁定的是 $pinned；npm 模式验证的不是最新发布物"
+          fi
+
+      - name: 编译门禁
+        working-directory: harness
+        run: pnpm verify:vue-build
+
+      - name: 失败时输出构建日志
+        if: failure()
+        working-directory: harness
+        run: |
+          if [ -f .verify-build.log ]; then
+            echo "===== .verify-build.log ====="
+            tail -80 .verify-build.log
+          fi
